@@ -1,15 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-     
-      <title>Outlier Reconstruction Web Demo</title>
-     
-   </head>
-   <body>
-     
-      <h1>Outlier Reconstruction Web Demo</h1>
-     
-   </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Outlier Reconstruction Web Demo</title>
+
+  <style>
+  canvas {
+    background-color: black;
+    border: 2px solid blue;
+  }
+
+  .parent{
+    width: 90%;
+    margin: 10px auto;
+  }
+
+  .first {
+    /*border: 2px solid black;*/
+    float: left;
+    width:30%;
+    height: 150px
+    box-sizing: border-box;
+  }
+
+  .second{
+    /*border: 2px solid black;*/
+    float: left;
+    margin-left: 5%;
+    width:30%;
+    height: 150px
+    box-sizing: border-box;
+  }
+
+  .third{
+    /*border: 2px solid black;*/
+    float: right;
+    width:30%;
+    height: 150px
+    box-sizing: border-box;
+  }
+  </style>
+
+</head>
+<body onload="init()">
+
+  <h1>Outlier Reconstruction Web Demo</h1>
+
+  <div class="parent">
+    <div class="first">Input</div>
+    <div class="second">AE Reconstruction</div>
+    <div class="third">NAE Reconstruction</div>
+  </div>
+
+  <div class="parent">
+    <div class="first">
+      <canvas width="360" height="360" id="Inputcanvas"></canvas>
+    </div>
+
+    <div class="second">
+      <canvas width="360" height="360" id="AEcanvas" ></canvas>
+    </div>
+
+    <div class="third">
+      <canvas width="360" height="360" id="NAEcanvas"></canvas>
+    </div>
+
+  </div>
+
+  <div class="parent">
+    <div class="first">
+      <button onclick="javascript:clearArea();return false;">Clear</button>
+    </div>
+    <div class="second">
+      <span>
+        Reconstruct Error:
+      </span>
+    </div>
+
+    <div class="third">
+      <span>
+        Reconstuct Error:
+      </span>
+    </div>
+  </div>
+
+  <script>
+  var canvas, context;
+
+  function init() {
+    canvas = document.getElementById("Inputcanvas");
+    context = canvas.getContext("2d");
+
+
+    context.lineWidth = 3; // 선 굵기를 2로 설정
+    context.strokeStyle = "white";
+
+    // 마우스 리스너 등록. e는 MouseEvent 객체
+    canvas.addEventListener("mousemove", function (e) { move(e) }, false);
+    canvas.addEventListener("mousedown", function (e) { down(e) }, false);
+    canvas.addEventListener("mouseup", function (e) { up(e) }, false);
+    canvas.addEventListener("mouseout", function (e) { out(e) }, false);
+  }
+
+  var startX=0, startY=0; // 드래깅동안, 처음 마우스가 눌러진 좌표
+  var drawing=false;
+  function draw(curX, curY) {
+    context.beginPath();
+    context.moveTo(startX, startY);
+    context.lineTo(curX, curY);
+    context.stroke();
+  }
+  function down(e) {
+    startX = e.offsetX; startY = e.offsetY;
+    drawing = true;
+  }
+  function up(e) { drawing = false; }
+  function move(e) {
+    if(!drawing) return; // 마우스가 눌러지지 않았으면 리턴
+    var curX = e.offsetX, curY = e.offsetY;
+    draw(curX, curY);
+    startX = curX; startY = curY;
+  }
+  function out(e) { drawing = false; }
+
+
+  function clearArea() {
+    // Use the identity matrix while clearing the canvas
+    context.setTransform(1, 0, 0, 1, 0, 0);
+    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+  }
+</script>
+</body>
 </html>
