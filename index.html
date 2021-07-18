@@ -41,6 +41,11 @@
     height: 150px
     box-sizing: border-box;
   }
+
+  .preset_btn{
+    float: left;
+
+  }
   </style>
 
 </head>
@@ -72,13 +77,32 @@
   <div class="parent">
     <div class="first">
       <button onclick="javascript:clearArea();return false;">Clear</button>
+    </br></br>
+      <span>Preset Inputs</span></br>
+      <div class="preset_btn">
+      <button type="button" id="mnist3_btn" onclick="javascript:load_image('mnist_3.jpg');return false;">
+        <img src="./preset_image/mnist_3.jpg"></button>
+
+      <button type="button" id="mnist7_btn" onclick="javascript:load_image('mnist_7.jpg');return false;">
+        <img src="./preset_image/mnist_7.jpg"></button>
+
+      <button type="button" id="omniglot1_btn" onclick="javascript:load_image('omniglot1.jpg');return false;">
+        <img src="./preset_image/omniglot1.jpg"></button>
+
+      <button type="button" id="omniglot2_btn" onclick="javascript:load_image('omniglot2.jpg');return false;">
+        <img src="./preset_image/omniglot2.jpg"></button>
+
+      <button type="button" id="fashionmnist_btn" onclick="javascript:load_image('fashionmnist.jpg');return false;">
+        <img src="./preset_image/fashionmnist.jpg"></button>
+
+      </div>
+
     </div>
     <div class="second">
       <span>
         Reconstruct Error:
       </span>
     </div>
-
     <div class="third">
       <span>
         Reconstuct Error:
@@ -86,7 +110,19 @@
     </div>
   </div>
 
+
   <script>
+  // 원본 이미지 사이즈는 28*28로 통일
+  function load_image(image_name){
+    var can=document.getElementById("Inputcanvas");
+    var ctx=canvas.getContext("2d");
+    var image=new Image();
+    image.src="./preset_image/"+image_name;
+    image.addEventListener("load", () => {ctx.drawImage(image, 0, 0, 360, 360)})
+  }
+
+
+
   var canvas, context;
 
   function init() {
