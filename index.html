@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,62 +8,64 @@
   <title>Outlier Reconstruction Web Demo</title>
 
   <style>
+    canvas {
+      background-color: black;
+      border: 1px solid blue;
+      /*position: absolute;*/
+      width: 100%;
+      height: 100%;
+    }
 
-  canvas {
-    background-color: black;
-    border: 1px solid blue;
-    /*position: absolute;*/
-    width: 100%;
-    height: 100%;
-  }
+    .parent {
+      width: 90%;
+      margin: 10px auto;
 
-  .parent{
-    width: 90%;
-    margin: 10px auto;
+    }
 
-  }
+    .first {
+      /*border: 2px solid black;*/
+      float: left;
+      width: 30%;
+      /* height: 150px; */
+      box-sizing: border-box;
 
-  .first {
-    /*border: 2px solid black;*/
-    float: left;
-    width:30%;
-    /* height: 150px; */
-    box-sizing: border-box;
+    }
 
-  }
+    .second {
+      /*border: 2px solid black;*/
+      float: left;
+      margin-left: 5%;
+      width: 30%;
+      /* height: 150px; */
+      box-sizing: border-box;
 
-  .second{
-    /*border: 2px solid black;*/
-    float: left;
-    margin-left: 5%;
-    width:30%;
-    /* height: 150px; */
-    box-sizing: border-box;
+    }
 
-  }
+    .third {
+      /*border: 2px solid black;*/
+      float: left;
+      margin-left: 5%;
+      width: 30%;
+      /* height: 150px; */
+      box-sizing: border-box;
 
-  .third{
-    /*border: 2px solid black;*/
-    float: left;
-    margin-left: 5%;
-    width:30%;
-    /* height: 150px; */
-    box-sizing: border-box;
+    }
 
-  }
+    .preset_btn {
+      float: left;
 
-  .preset_btn{
-    float: left;
-
-  }
+    }
   </style>
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"></script>
-  
+
   <script>
-  async function loadModel() {
+    async function loadModel() {
       model = undefined;
       model = await tf.loadGraphModel('./tfjs_AEmodel/model.json')
       console.log("model loaded")
@@ -72,106 +75,113 @@
   </script>
 
 </head>
+
 <body onload="init()">
   <h1 style="text-align: center;">Outlier Reconstruction</h1>
 
-  <p style="text-align: center;">Demo coded by Hyerim Jeon and <a href="https://swyoon.github.io/">Sangwoong Yoon</a>.</p>
+  <p style="text-align: center;">Demo coded by Hyerim Jeon and <a href="https://swyoon.github.io/">Sangwoong Yoon</a>.
+  </p>
   <br><br>
 
   <div class="container">
     <div class="row">
       <p>
         <b>Outlier reconstruction</b> is a phenomenon that an autoencoder (AE) successfully reconstructs an outlier.
-        In the demo below, we demonstrate that AE trained on MNIST is capable of reconstrcting diverse images that are clearly not MNIST.  
-        Outlier reconstruction is detrimental for an autoencoder-based outlier detector, 
+        In the demo below, we demonstrate that AE trained on MNIST is capable of reconstrcting diverse images that are
+        clearly not MNIST.
+        Outlier reconstruction is detrimental for an autoencoder-based outlier detector,
         as the reconstructed outliers will be misclassified as an inlier.
       </p>
       <p>
-        In our <a href="https://arxiv.org/abs/2105.05735">ICML 2021 paper</a>, 
-        we propose a novel autoencoder called <b>Normalized Autoencoder (NAE)</b> where AE is interpreted as an energy-based model by setting the reconstruction error as the energy function.
-        The outlier reconstruction is naturally suppresed in NAE through the enforcement of the normalization constraint.
+        In our <a href="https://arxiv.org/abs/2105.05735">ICML 2021 paper</a>,
+        we propose a novel autoencoder called <b>Normalized Autoencoder (NAE)</b> where AE is interpreted as an
+        energy-based model by setting the reconstruction error as the energy function.
+        The outlier reconstruction is naturally suppresed in NAE through the enforcement of the normalization
+        constraint.
       </p>
-    
-  <div class="parent">
-    <div class="first">Input</div>
-    <div class="second">AE Reconstruction</div>
-    <div class="third">NAE Reconstruction</div>
-  </div>
 
-  <div class="parent">
-    <div class="first">
-      <canvas width="280" height="280" id="Inputcanvas"></canvas>
+      <div class="parent">
+        <div class="first">Input</div>
+        <div class="second">AE Reconstruction</div>
+        <div class="third">NAE Reconstruction</div>
+      </div>
 
-      <!--canvas 그림 280에서 28로 10배 다운스케일링 할 때 해상도 비교 -->
-      <!--button onclick="fromDataURL();">캔버스 복사=></button>                  
+      <div class="parent">
+        <div class="first">
+          <canvas width="280" height="280" id="Inputcanvas"></canvas>
+
+          <!--canvas 그림 280에서 28로 10배 다운스케일링 할 때 해상도 비교 -->
+          <!--button onclick="fromDataURL();">캔버스 복사=></button>                  
 <canvas id="copyCanvas" width="28" height="28" style=" position: relative; border: 1px solid #000;"></canvas-->
 
-    </div>
+        </div>
 
-    <div class="second">
-      <canvas width="280" height="280" id="AEcanvas" ></canvas>
-    </div>
+        <div class="second">
+          <canvas width="280" height="280" id="AEcanvas"></canvas>
+        </div>
 
-    <div class="third">
-      <canvas width="280" height="280" id="NAEcanvas"></canvas>
-    </div>
-
-  </div>
-
-  <div class="parent">
-    <div class="first">
-      <button onclick="javascript:clearArea();return false;">Clear</button>
-      <button onclick="javascript:make_prediction();return false;">Run</button>
-    </br></br>
-      <span>Preset Inputs</span></br>
-      <div class="preset_btn">
-      <button type="button" id="mnist3_btn" onclick="javascript:load_image('mnist_3.jpg');return false;">
-        <img src="./preset_image/mnist_3.jpg"></button>
-
-      <button type="button" id="mnist7_btn" onclick="javascript:load_image('mnist_7.jpg');return false;">
-        <img src="./preset_image/mnist_7.jpg"></button>
-
-      <button type="button" id="omniglot1_btn" onclick="javascript:load_image('omniglot1.jpg');return false;">
-        <img src="./preset_image/omniglot1.jpg"></button>
-
-      <button type="button" id="omniglot2_btn" onclick="javascript:load_image('omniglot2.jpg');return false;">
-        <img src="./preset_image/omniglot2.jpg"></button>
-
-      <button type="button" id="fashionmnist_btn" onclick="javascript:load_image('fashionmnist.jpg');return false;">
-        <img src="./preset_image/fashionmnist.jpg"></button>
+        <div class="third">
+          <canvas width="280" height="280" id="NAEcanvas"></canvas>
+        </div>
 
       </div>
 
-    </div>
-    <div class="second">
-      <span>
-        Reconstruct Error:
-      </span>
-    </div>
-    <div class="third">
-      <span>
-        Reconstuct Error:
-      </span>
+      <div class="parent">
+        <div class="first">
+          <button onclick="javascript:clearArea();return false;">Clear</button>
+          <button onclick="javascript:make_prediction();return false;">Run</button>
+          </br></br>
+          <span>Preset Inputs</span></br>
+          <div class="preset_btn">
+            <button type="button" id="mnist3_btn" onclick="javascript:load_image('mnist_3.jpg');return false;">
+              <img src="./preset_image/mnist_3.jpg"></button>
+
+            <button type="button" id="mnist7_btn" onclick="javascript:load_image('mnist_7.jpg');return false;">
+              <img src="./preset_image/mnist_7.jpg"></button>
+
+            <button type="button" id="omniglot1_btn" onclick="javascript:load_image('omniglot1.jpg');return false;">
+              <img src="./preset_image/omniglot1.jpg"></button>
+
+            <button type="button" id="omniglot2_btn" onclick="javascript:load_image('omniglot2.jpg');return false;">
+              <img src="./preset_image/omniglot2.jpg"></button>
+
+            <button type="button" id="fashionmnist_btn"
+              onclick="javascript:load_image('fashionmnist.jpg');return false;">
+              <img src="./preset_image/fashionmnist.jpg"></button>
+
+          </div>
+
+        </div>
+        <div class="second">
+          <span>
+            Reconstruct Error:
+          </span>
+        </div>
+        <div class="third">
+          <span>
+            Reconstuct Error:
+          </span>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-</div>
 
-</br></br>
+  </br></br>
 
   <div class="container">
     <div class="row">
       <p>
         To learn more about outlier reconstruction and NAE, please check out our paper
-        <a href="https://arxiv.org/abs/2105.05735">Autoencoding Under Normalization Constraint (Yoon, Noh, and Park, 2021)</a>.
+        <a href="https://arxiv.org/abs/2105.05735">Autoencoding Under Normalization Constraint (Yoon, Noh, and Park,
+          2021)</a>.
         If you want to cite outlier reconstruction, NAE, or the demo, please use the following bibtex:
       </p>
     </div>
   </div>
-  
+
   <div class="container">
     <div class="row">
-    <pre style="background-color: #eee; border: 1px solid #999">
+      <pre style="background-color: #eee; border: 1px solid #999">
     @InProceedings{yoon21autoencoding,
       title = 	 {Autoencoding Under Normalization Constraints},
       author =       {Yoon, Sangwoong and Noh, Yung-Kyun and Park, Frank},
@@ -190,32 +200,201 @@
   <!--script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script-->
   <!--script src="outlier_reconstruct.js"></script-->
   <script>
-  // const model=await tf.loadGraphModel('./tfjs_AEmodel/model.json')
+    // const model=await tf.loadGraphModel('./tfjs_AEmodel/model.json')
 
 
-    function make_prediction(){
+    function make_prediction() {
       // var output, temp;
+
+
+      // const tf = require("@tensorflow/tfjs-node");
+
 
       // const imgEl = document.getElementById('./preset_image/omniglot1.jpg');
       // output=model.predict("./preset_image/omniglot1.jpg");
       //const outputData=output.dataSync();
       // const output=model.predict(imgEl);
-      const testdata=new Image();
-      testdata.src="./preset_image/omniglot1.jpg";
-      
+      const testdata = new Image();
+      testdata.src = "./preset_image/mnist_3.jpg";
+
       // const testdata="./preset_image/omniglot1.jpg";
       const input = tf.tidy(() => {
-      const img = tf.browser.fromPixels(testdata,1)
-      return img.expandDims(0)
-      // return img
+        const img = tf.browser.fromPixels(testdata, 1)
+        return img.expandDims(0)
+        // return img
       })
-      const resized=tf.cast(input,'float32')
-      const t4d = tf.tensor3d(Array.from(resized.dataSync()),[ -1,28,28])
-      // const t4d=tf.reshape(resized, [-1,28,28])
-      const pred=model.predict(t4d);
-      var can=document.getElementById("AEcanvas");
-      var ctx=can.getContext("2d");
-      ctx.drawImage(pred, 0,0,280,280);
+      const resized = tf.cast(input, 'float32')
+      // const t4d = tf.tensor3d(Array.from(resized.dataSync()),[-1, 28,28])
+      const t4d = tf.reshape(resized, [-1, 28, 28])
+      // console.log(t4d)
+      const pred = model.predict(t4d);
+      //pred.array().then(array => console.log(array));
+      
+      /*
+       In console, max and min value check 
+       function getMax(a){return Math.max(...a.map(e => Array.isArray(e) ? getMax(e) : e));}
+      */ 
+      
+
+
+
+      //var myImage = tf.node.encodePng(pred);
+      //document.write(myImage)
+
+      //var result=pred.mul([1,1,1,1]).dataSync();
+      var can = document.getElementById("AEcanvas");
+      var ctx = can.getContext("2d");
+
+      // ctx.drawImage(pred, 0,0,280,280);
+
+      /* 
+      const canvas = document.createElement('canvas');
+      canvas.width = pred.shape.width
+      canvas.height = pred.shape.height
+      tf.browser.toPixels(pred, canvas);    
+      */
+
+      
+      var a = pred;
+      // map values from 0(-1) -> 1 to 0 -> 255
+      // var b = tf.scalar(255);
+      a = a.mul(255);
+      // a = a.add(b);
+      var cast = a.asType('int32');
+      var values = cast.arraySync();
+      console.log(values);
+/*
+      var canvas = document.createElement("canvas");
+      canvas.height = 28;
+      canvas.width = 28;
+      document.body.appendChild(canvas);
+
+      var ctx = canvas.getContext("2d");
+      console.log(values.length)
+      for (var y = 0; y < 28; ++y) {
+        for (var x = 0; x < 28; ++x) {
+          ctx.fillStyle = "rgb("+values[x][y]+","+values[x][y]+","+values[x][y]+")";
+          console.log(values[x][y])
+          // ctx.fillStyle="white";
+          ctx.fillRect(x, y, 1, 1);
+          
+        }
+      }
+     */ 
+
+      
+      var img = new Image();
+      img.src = './preset_image/empty.jpg';
+      var canvas = document.getElementById('Inputcanvas');
+      var canvasEdited =  document.getElementById('AEcanvas');
+      var ctx = canvas.getContext('2d');
+      var arr = [];
+      
+      var ctx1=canvasEdited.getContext('2d');
+      
+
+      img.onload = function() {
+          ctx.drawImage(img, 0, 0,280, 280);
+
+          var imageData = ctx.getImageData(0,0, 28, 28)
+
+           editPixels(imageData.data);
+           
+           drawEditedImage( imageData);
+           //ctx1.drawImage(imageData,0,0,28,28);
+           
+           /*
+           ctx.scale(2,2);
+           ctx.drawImage(canvasEdited,0,0);
+           */
+           
+     };
+     console.log(values[0][0][28]);
+     function editPixels(imgData) {
+       console.log(imgData.length)
+       var x=0;
+       var y=0;
+              for (var i=0; i < imgData.length; i += 4) {
+                  imgData[i] = values[0][x][y];
+                imgData[i+1] = values[0][x][y];
+                imgData[i+2] = values[0][x][y];
+                
+                y=y+1;
+                if (y==28){
+                  x=x+1;
+                  y=0;
+                }
+      
+
+                console.log(imgData[i])
+                //console.log(imgData[i+1])
+                //console.log(imgData[i+2])
+
+             }
+     }
+
+     function drawEditedImage(newData) {
+         var ctxEdited = canvasEdited.getContext('2d');
+         ctxEdited.putImageData(newData, 0, 0);
+     }
+
+
+      /*
+      var imgData=new Image();
+      imgData.width=28;
+      imgData.height=28;
+      var pixels=imgData.data;
+      console.log(pixels);
+      for (var i=0; i <28; i++){
+        for (var j=0; i<28; j++){
+          imgData[i][j][0]=255;
+          imgData[i][j][1]=0;
+          imgData[i][j][2]=0;
+        }
+      }
+      */
+
+
+
+      /*
+      var a = pred;
+      // map values from -1 -> 1 to 0 -> 255
+      var b = tf.scalar(255);
+      a = a.mul(b);
+      //a = a.add(b);
+      a.print();
+      a.array().then(array => console.log(array));
+
+      // float to int
+      var cast = a.asType('int32');
+
+      // finally, as an array
+      var values = cast.arraySync();
+      //var canvas = document.createElement("canvas");
+      //  canvas.height = 280
+      //  canvas.width = 280;
+      //  document.body.appendChild(canvas);
+
+
+
+
+      // in case not converting 2d to 1d...
+      var data = values;
+      console.log(data)
+      // Now that we have canvas to work with, we need to draw the image data into it:
+      //  var ctx = canvas.getContext("2d");
+      for (var y = 0; y < data.length; ++y) {
+        for (var x = 0; x < data[y].length; ++x) {
+          // ctx.fillStyle = "rgb("+data[x][y][0]+","+data[x][y][1]+","+data[x][y][2]+")";
+          // ctx.fillStyle="white";
+          // ctx.fillRect(x, y, 1, 1);
+          imgData.data[x][y][0]
+        }
+      }
+      */
+      //ctx.putImageData(data, 0, 0);
+
+
 
     }
 
@@ -223,84 +402,98 @@
 
   <script>
 
-  // 원본 이미지 사이즈는 28*28로 통일
-  function load_image(image_name){
-    var can=document.getElementById("Inputcanvas");
-    var ctx=canvas.getContext("2d");
-    var image=new Image();
-    image.src="./preset_image/"+image_name;
-    image.addEventListener("load", () => {ctx.drawImage(image, 0, 0, 280, 280)})
-  }
+    // 원본 이미지 사이즈는 28*28로 통일
+    function load_image(image_name) {
+      var can = document.getElementById("Inputcanvas");
+      var ctx = canvas.getContext("2d");
+      var image = new Image();
+      image.src = "./preset_image/" + image_name;
+      image.addEventListener("load", () => { ctx.drawImage(image, 0, 0, 280, 280) })
+    }
 
 
 
-  var canvas, context;
+    var canvas, context;
+    var AEcan, AEcon;
+    var NAEcan, NAEcon;
 
-  function init() {
-    canvas = document.getElementById("Inputcanvas");
-    context = canvas.getContext("2d");
+    function init() {
+      canvas = document.getElementById("Inputcanvas");
+      context = canvas.getContext("2d");
 
+      AEcan= document.getElementById("AEcanvas");
+      AEcon=AEcan.getContext("2d");
 
-    context.lineWidth = 20; // 선 굵기를 20로 설정
-    context.strokeStyle = "white";
-    context.lineCap="round";
-
-    // 마우스 리스너 등록. e는 MouseEvent 객체
-    canvas.addEventListener("mousemove", function (e) { move(e) }, false); //  캔버스에서 마우스가 움직이는 동안 발생되는 이벤트
-    canvas.addEventListener("mousedown", function (e) { down(e) }, false); // 캔버스에서 마우스를 눌렀을 때 발생되는 이벤트
-    canvas.addEventListener("mouseup", function (e) { up(e) }, false); // 캔버스에서 눌러진 마우스를 떼었을 때 발생되는 이벤트
-    canvas.addEventListener("mouseout", function (e) { out(e) }, false); // 캔버스에서 마우스가 벗어났을 때 발생되는 이벤트
-  }
-
-  var startX=0, startY=0; // 드래깅동안, 처음 마우스가 눌러진 좌표
-  var drawing=false;
-
-  function canvasX(clientX) {
-  var bound = canvas.getBoundingClientRect();
-  return (clientX - bound.left) * (canvas.width / bound.width);
-  }
-
-  function canvasY(clientY) {
-  var bound = canvas.getBoundingClientRect();
-  return (clientY - bound.top) * (canvas.height / bound.height);
-  }
-
-  function draw(curX, curY) {
-    context.beginPath(); //마우스를 누르고 움직일 때마다 시작점을 재지정
-    context.moveTo(startX, startY); 
-    context.lineTo(curX, curY); //마우스 시작점부터 현재 점까지 라인 그리기
-    context.stroke();
-  }
-  function down(e) {
-    e.preventDefault(); //더블클릭했을 때 캔버스 지정하게 되어서 파란색으로 반전되는 것 막음
-    
-    // startX = e.offsetX; startY = e.offsetY;
-    // startX=e.clientX-canvas.offsetLeft; startY=e.clientY-canvas.offsetTop;
-    startX=canvasX(e.clientX); startY=canvasY(e.clientY);
-    drawing = true;
-  }
-  function up(e) { drawing = false; }
-  function move(e) {
-    if(!drawing) return; // 마우스가 눌러지지 않았으면 리턴
-    // var curX = e.offsetX, curY = e.offsetY;
-    var curX=canvasX(e.clientX), curY=canvasY(e.clientY);
-    draw(curX, curY);
-    startX = curX; startY = curY;
-  }
-  function out(e) { drawing = false; }
+      NAEcan= document.getElementById("NAEcanvas");
+      NAEcon=NAEcan.getContext("2d");
 
 
-  function clearArea() {
-    // Use the identity matrix while clearing the canvas
-    context.setTransform(1, 0, 0, 1, 0, 0);
-    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-  }
+      context.lineWidth = 20; // 선 굵기를 20로 설정
+      context.strokeStyle = "white";
+      context.lineCap = "round";
 
-</script>
+      // 마우스 리스너 등록. e는 MouseEvent 객체
+      canvas.addEventListener("mousemove", function (e) { move(e) }, false); //  캔버스에서 마우스가 움직이는 동안 발생되는 이벤트
+      canvas.addEventListener("mousedown", function (e) { down(e) }, false); // 캔버스에서 마우스를 눌렀을 때 발생되는 이벤트
+      canvas.addEventListener("mouseup", function (e) { up(e) }, false); // 캔버스에서 눌러진 마우스를 떼었을 때 발생되는 이벤트
+      canvas.addEventListener("mouseout", function (e) { out(e) }, false); // 캔버스에서 마우스가 벗어났을 때 발생되는 이벤트
+    }
+
+    var startX = 0, startY = 0; // 드래깅동안, 처음 마우스가 눌러진 좌표
+    var drawing = false;
+
+    function canvasX(clientX) {
+      var bound = canvas.getBoundingClientRect();
+      return (clientX - bound.left) * (canvas.width / bound.width);
+    }
+
+    function canvasY(clientY) {
+      var bound = canvas.getBoundingClientRect();
+      return (clientY - bound.top) * (canvas.height / bound.height);
+    }
+
+    function draw(curX, curY) {
+      context.beginPath(); //마우스를 누르고 움직일 때마다 시작점을 재지정
+      context.moveTo(startX, startY);
+      context.lineTo(curX, curY); //마우스 시작점부터 현재 점까지 라인 그리기
+      context.stroke();
+    }
+    function down(e) {
+      e.preventDefault(); //더블클릭했을 때 캔버스 지정하게 되어서 파란색으로 반전되는 것 막음
+
+      // startX = e.offsetX; startY = e.offsetY;
+      // startX=e.clientX-canvas.offsetLeft; startY=e.clientY-canvas.offsetTop;
+      startX = canvasX(e.clientX); startY = canvasY(e.clientY);
+      drawing = true;
+    }
+    function up(e) { drawing = false; }
+    function move(e) {
+      if (!drawing) return; // 마우스가 눌러지지 않았으면 리턴
+      // var curX = e.offsetX, curY = e.offsetY;
+      var curX = canvasX(e.clientX), curY = canvasY(e.clientY);
+      draw(curX, curY);
+      startX = curX; startY = curY;
+    }
+    function out(e) { drawing = false; }
 
 
-<!--canvas 그림 280에서 28로 10배 다운스케일링 할 때 해상도 비교-->
-<!--script type="text/javascript">
+    function clearArea() {
+      // Use the identity matrix while clearing the canvas
+      context.setTransform(1, 0, 0, 1, 0, 0);
+      context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+
+      AEcon.setTransform(1, 0, 0, 1, 0, 0);
+      AEcon.clearRect(0, 0, context.canvas.width, context.canvas.height);
+
+      NAEcon.setTransform(1, 0, 0, 1, 0, 0);
+      NAEcon.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    }
+
+  </script>
+
+
+  <!--canvas 그림 280에서 28로 10배 다운스케일링 할 때 해상도 비교-->
+  <!--script type="text/javascript">
   function fromDataURL(){       
     var copyCanvas = document.getElementById('copyCanvas');    
     var copyContext = copyCanvas.getContext('2d'); 
@@ -311,4 +504,5 @@
   </script-->
 
 </body>
+
 </html>
