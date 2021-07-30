@@ -30,3 +30,6 @@ https://www.youtube.com/watch?v=1s9k2GxH2g4
 ## 2021-07-27
 
 * TensorFlow Autoencoder Tutorial: https://www.tensorflow.org/tutorials/generative/autoencoder
+* TensorFlow: Save and load models: https://www.tensorflow.org/tutorials/keras/save_and_load
+* TensorFlow: Model Conversion: https://www.tensorflow.org/js/guide/conversion
+* Tensorflow tfjs converter: https://github.com/tensorflow/tfjs/tree/master/tfjs-converter
