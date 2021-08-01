@@ -108,7 +108,7 @@
 
       <div class="parent">
         <div class="first">
-          <canvas width="280" height="280" id="Inputcanvas"></canvas>
+          <canvas width="28" height="28" id="Inputcanvas"></canvas>
 
           <!--canvas 그림 280에서 28로 10배 다운스케일링 할 때 해상도 비교 -->
           <!--button onclick="fromDataURL();">캔버스 복사=></button>                  
@@ -117,11 +117,11 @@
         </div>
 
         <div class="second">
-          <canvas width="280" height="280" id="AEcanvas"></canvas>
+          <canvas width="28" height="28" id="AEcanvas"></canvas>
         </div>
 
         <div class="third">
-          <canvas width="280" height="280" id="NAEcanvas"></canvas>
+          <canvas width="28" height="28" id="NAEcanvas"></canvas>
         </div>
 
       </div>
@@ -145,9 +145,13 @@
             <button type="button" id="omniglot2_btn" onclick="javascript:load_image('omniglot2.jpg');return false;">
               <img src="./preset_image/omniglot2.jpg"></button>
 
-            <button type="button" id="fashionmnist_btn"
-              onclick="javascript:load_image('fashionmnist.jpg');return false;">
-              <img src="./preset_image/fashionmnist.jpg"></button>
+            <button type="button" id="fashionmnist1_btn"
+              onclick="javascript:load_image('fashionmnist1.jpg');return false;">
+              <img src="./preset_image/fashionmnist1.jpg"></button>
+
+            <button type="button" id="fashionmnist2_btn"
+              onclick="javascript:load_image('fashionmnist2.jpg');return false;">
+              <img src="./preset_image/fashionmnist2.jpg"></button>
 
           </div>
 
@@ -196,207 +200,88 @@
     </div>
   </div>
 
-  <!-- load TensorFlow.js -->
-  <!--script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script-->
   <!--script src="outlier_reconstruct.js"></script-->
   <script>
-    // const model=await tf.loadGraphModel('./tfjs_AEmodel/model.json')
-
 
     function make_prediction() {
-      // var output, temp;
+      var Incan = document.getElementById("Inputcanvas");
+      var Inctx = Incan.getContext("2d");
 
+      var AEcan = document.getElementById("AEcanvas");
+      var AEctx = AEcan.getContext("2d");
 
-      // const tf = require("@tensorflow/tfjs-node");
+      var NAEcan = document.getElementById("NAEcanvas");
+      var NAEctx = NAEcan.getContext("2d");
 
+      var testimg = new Image();
+      testimg = Inctx.getImageData(0, 0, 28, 28);
+      //testimg.src = "./preset_image/omniglot1.jpg";
 
-      // const imgEl = document.getElementById('./preset_image/omniglot1.jpg');
-      // output=model.predict("./preset_image/omniglot1.jpg");
-      //const outputData=output.dataSync();
-      // const output=model.predict(imgEl);
-      const testdata = new Image();
-      testdata.src = "./preset_image/mnist_3.jpg";
+      console.log(testimg.data);
 
-      // const testdata="./preset_image/omniglot1.jpg";
+      //AEctx.scale(0.1, 0.1);
+      //AEctx.drawImage(Incan, 0, 0);        
+      //testimg = AEctx.getImageData(0, 0, 28, 28);
+      //AEctx.putImageData(testimg,0,0); 
+      //AEctx.drawImage(testimg,0,0)
+      //NAEctx.drawImage(testimg,0,0,28,28);
+
       const input = tf.tidy(() => {
-        const img = tf.browser.fromPixels(testdata, 1)
-        return img.expandDims(0)
-        // return img
+        const img = tf.browser.fromPixels(testimg, 1);
+        return img.expandDims(0);
       })
+
       const resized = tf.cast(input, 'float32')
-      // const t4d = tf.tensor3d(Array.from(resized.dataSync()),[-1, 28,28])
-      const t4d = tf.reshape(resized, [-1, 28, 28])
-      // console.log(t4d)
-      const pred = model.predict(t4d);
-      //pred.array().then(array => console.log(array));
-      
-      /*
-       In console, max and min value check 
-       function getMax(a){return Math.max(...a.map(e => Array.isArray(e) ? getMax(e) : e));}
-      */ 
-      
+      const t3d = tf.reshape(resized, [-1, 28, 28])
 
+      const pred = model.predict(t3d);
 
-
-      //var myImage = tf.node.encodePng(pred);
-      //document.write(myImage)
-
-      //var result=pred.mul([1,1,1,1]).dataSync();
-      var can = document.getElementById("AEcanvas");
-      var ctx = can.getContext("2d");
-
-      // ctx.drawImage(pred, 0,0,280,280);
-
-      /* 
-      const canvas = document.createElement('canvas');
-      canvas.width = pred.shape.width
-      canvas.height = pred.shape.height
-      tf.browser.toPixels(pred, canvas);    
-      */
-
-      
       var a = pred;
-      // map values from 0(-1) -> 1 to 0 -> 255
-      // var b = tf.scalar(255);
+      // map values from 0 -> 1 to 0 -> 255
       a = a.mul(255);
-      // a = a.add(b);
+
       var cast = a.asType('int32');
       var values = cast.arraySync();
       console.log(values);
-/*
-      var canvas = document.createElement("canvas");
-      canvas.height = 28;
-      canvas.width = 28;
-      document.body.appendChild(canvas);
 
-      var ctx = canvas.getContext("2d");
-      console.log(values.length)
-      for (var y = 0; y < 28; ++y) {
-        for (var x = 0; x < 28; ++x) {
-          ctx.fillStyle = "rgb("+values[x][y]+","+values[x][y]+","+values[x][y]+")";
-          console.log(values[x][y])
-          // ctx.fillStyle="white";
-          ctx.fillRect(x, y, 1, 1);
-          
-        }
-      }
-     */ 
-
-      
       var img = new Image();
       img.src = './preset_image/empty.jpg';
-      var canvas = document.getElementById('Inputcanvas');
-      var canvasEdited =  document.getElementById('AEcanvas');
-      var ctx = canvas.getContext('2d');
-      var arr = [];
-      
-      var ctx1=canvasEdited.getContext('2d');
-      
 
-      img.onload = function() {
-          ctx.drawImage(img, 0, 0,280, 280);
+      img.onload = function () {
+        //Inctx.drawImage(testimg, 0, 0,28, 28);
+        Inctx.putImageData(testimg, 0, 0);
+        var imageData = Inctx.getImageData(0, 0, 28, 28);
+        NAEctx.putImageData(testimg, 0, 0);
+        editPixels(imageData.data);
+        drawEditedImage(imageData);
+      };
 
-          var imageData = ctx.getImageData(0,0, 28, 28)
+      function editPixels(imgData) {
+        console.log(imgData.length);
+        console.log(values);
+        console.log(imgData);
+        var x = 0;
+        var y = 0;
 
-           editPixels(imageData.data);
-           
-           drawEditedImage( imageData);
-           //ctx1.drawImage(imageData,0,0,28,28);
-           
-           /*
-           ctx.scale(2,2);
-           ctx.drawImage(canvasEdited,0,0);
-           */
-           
-     };
-     console.log(values[0][0][28]);
-     function editPixels(imgData) {
-       console.log(imgData.length)
-       var x=0;
-       var y=0;
-              for (var i=0; i < imgData.length; i += 4) {
-                  imgData[i] = values[0][x][y];
-                imgData[i+1] = values[0][x][y];
-                imgData[i+2] = values[0][x][y];
-                
-                y=y+1;
-                if (y==28){
-                  x=x+1;
-                  y=0;
-                }
-      
+        for (var i = 0; i < imgData.length; i += 4) {
+          imgData[i] = values[0][x][y];
+          imgData[i + 1] = values[0][x][y];
+          imgData[i + 2] = values[0][x][y];
 
-                console.log(imgData[i])
-                //console.log(imgData[i+1])
-                //console.log(imgData[i+2])
-
-             }
-     }
-
-     function drawEditedImage(newData) {
-         var ctxEdited = canvasEdited.getContext('2d');
-         ctxEdited.putImageData(newData, 0, 0);
-     }
-
-
-      /*
-      var imgData=new Image();
-      imgData.width=28;
-      imgData.height=28;
-      var pixels=imgData.data;
-      console.log(pixels);
-      for (var i=0; i <28; i++){
-        for (var j=0; i<28; j++){
-          imgData[i][j][0]=255;
-          imgData[i][j][1]=0;
-          imgData[i][j][2]=0;
+          y = y + 1;
+          if (y == 28) {
+            x = x + 1;
+            y = 0;
+          }
         }
       }
-      */
 
-
-
-      /*
-      var a = pred;
-      // map values from -1 -> 1 to 0 -> 255
-      var b = tf.scalar(255);
-      a = a.mul(b);
-      //a = a.add(b);
-      a.print();
-      a.array().then(array => console.log(array));
-
-      // float to int
-      var cast = a.asType('int32');
-
-      // finally, as an array
-      var values = cast.arraySync();
-      //var canvas = document.createElement("canvas");
-      //  canvas.height = 280
-      //  canvas.width = 280;
-      //  document.body.appendChild(canvas);
-
-
-
-
-      // in case not converting 2d to 1d...
-      var data = values;
-      console.log(data)
-      // Now that we have canvas to work with, we need to draw the image data into it:
-      //  var ctx = canvas.getContext("2d");
-      for (var y = 0; y < data.length; ++y) {
-        for (var x = 0; x < data[y].length; ++x) {
-          // ctx.fillStyle = "rgb("+data[x][y][0]+","+data[x][y][1]+","+data[x][y][2]+")";
-          // ctx.fillStyle="white";
-          // ctx.fillRect(x, y, 1, 1);
-          imgData.data[x][y][0]
-        }
+      function drawEditedImage(newData) {
+        console.log(newData);
+        AEctx.putImageData(newData, 0, 0);
       }
-      */
-      //ctx.putImageData(data, 0, 0);
-
-
-
     }
+
 
   </script>
 
@@ -408,10 +293,8 @@
       var ctx = canvas.getContext("2d");
       var image = new Image();
       image.src = "./preset_image/" + image_name;
-      image.addEventListener("load", () => { ctx.drawImage(image, 0, 0, 280, 280) })
+      image.addEventListener("load", () => { ctx.drawImage(image, 0, 0, 28, 28) })
     }
-
-
 
     var canvas, context;
     var AEcan, AEcon;
@@ -421,16 +304,16 @@
       canvas = document.getElementById("Inputcanvas");
       context = canvas.getContext("2d");
 
-      AEcan= document.getElementById("AEcanvas");
-      AEcon=AEcan.getContext("2d");
+      AEcan = document.getElementById("AEcanvas");
+      AEcon = AEcan.getContext("2d");
 
-      NAEcan= document.getElementById("NAEcanvas");
-      NAEcon=NAEcan.getContext("2d");
+      NAEcan = document.getElementById("NAEcanvas");
+      NAEcon = NAEcan.getContext("2d");
 
 
-      context.lineWidth = 20; // 선 굵기를 20로 설정
+      context.lineWidth = 1.5; // 선 굵기를 20로 설정
       context.strokeStyle = "white";
-      context.lineCap = "round";
+      //context.lineCap = "round";
 
       // 마우스 리스너 등록. e는 MouseEvent 객체
       canvas.addEventListener("mousemove", function (e) { move(e) }, false); //  캔버스에서 마우스가 움직이는 동안 발생되는 이벤트
@@ -498,7 +381,6 @@
     var copyCanvas = document.getElementById('copyCanvas');    
     var copyContext = copyCanvas.getContext('2d'); 
     copyContext.drawImage(canvas,0,0,28,28);  
-
     } 
   
   </script-->
