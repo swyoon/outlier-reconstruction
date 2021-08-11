@@ -1,0 +1,42 @@
+canvas {
+  background-color: black;
+  border: 1px solid blue;
+  /*position: absolute;*/
+  width: 100%;
+  height: 100%;
+}
+
+.parent {
+  width: 90%;
+  margin: 10px auto;
+}
+
+.first {
+  /*border: 2px solid black;*/
+  float: left;
+  width: 30%;
+  /* height: 150px; */
+  box-sizing: border-box;
+}
+
+.second {
+  /*border: 2px solid black;*/
+  float: left;
+  margin-left: 5%;
+  width: 30%;
+  /* height: 150px; */
+  box-sizing: border-box;
+}
+
+.third {
+  /*border: 2px solid black;*/
+  float: left;
+  margin-left: 5%;
+  width: 30%;
+  /* height: 150px; */
+  box-sizing: border-box;
+}
+
+.preset_btn {
+  float: left;
+}

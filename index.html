@@ -7,56 +7,7 @@
 
   <title>Outlier Reconstruction Web Demo</title>
 
-  <style>
-    canvas {
-      background-color: black;
-      border: 1px solid blue;
-      /*position: absolute;*/
-      width: 100%;
-      height: 100%;
-    }
-
-    .parent {
-      width: 90%;
-      margin: 10px auto;
-
-    }
-
-    .first {
-      /*border: 2px solid black;*/
-      float: left;
-      width: 30%;
-      /* height: 150px; */
-      box-sizing: border-box;
-
-    }
-
-    .second {
-      /*border: 2px solid black;*/
-      float: left;
-      margin-left: 5%;
-      width: 30%;
-      /* height: 150px; */
-      box-sizing: border-box;
-
-    }
-
-    .third {
-      /*border: 2px solid black;*/
-      float: left;
-      margin-left: 5%;
-      width: 30%;
-      /* height: 150px; */
-      box-sizing: border-box;
-
-    }
-
-    .preset_btn {
-      float: left;
-
-    }
-  </style>
-
+  <link rel="stylesheet" href="style.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -64,22 +15,13 @@
     crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"></script>
 
-  <script>
-    async function loadModel() {
-      model = undefined;
-      model = await tf.loadGraphModel('./tfjs_AEmodel/model.json')
-      console.log("model loaded")
-    }
-    loadModel();
-
-  </script>
-
 </head>
 
-<body onload="init()">
+<body onload="init(), loadModel()">
   <h1 style="text-align: center;">Outlier Reconstruction</h1>
 
-  <p style="text-align: center;">Demo coded by Hyerim Jeon and <a href="https://swyoon.github.io/">Sangwoong Yoon</a>.
+  <p style="text-align: center;">Demo coded by <a href="mailto: junhr99@naver.com">Hyerim Jeon</a> and <a
+      href="https://swyoon.github.io/">Sangwoong Yoon</a>.
   </p>
   <br><br>
 
@@ -109,11 +51,6 @@
       <div class="parent">
         <div class="first">
           <canvas width="28" height="28" id="Inputcanvas"></canvas>
-
-          <!--canvas 그림 280에서 28로 10배 다운스케일링 할 때 해상도 비교 -->
-          <!--button onclick="fromDataURL();">캔버스 복사=></button>                  
-<canvas id="copyCanvas" width="28" height="28" style=" position: relative; border: 1px solid #000;"></canvas-->
-
         </div>
 
         <div class="second">
@@ -123,39 +60,15 @@
         <div class="third">
           <canvas width="28" height="28" id="NAEcanvas"></canvas>
         </div>
-
       </div>
 
       <div class="parent">
         <div class="first">
           <button onclick="javascript:clearArea();return false;">Clear</button>
           <button onclick="javascript:make_prediction();return false;">Run</button>
-          </br></br>
-          <span>Preset Inputs</span></br>
-          <div class="preset_btn">
-            <button type="button" id="mnist3_btn" onclick="javascript:load_image('png_mnist_5.png');return false;">
-              <img src="./preset_image/png_mnist_5.png"></button>
-
-            <button type="button" id="mnist7_btn" onclick="javascript:load_image('mnist_7.jpg');return false;">
-              <img src="./preset_image/mnist_7.jpg"></button>
-
-            <button type="button" id="omniglot1_btn" onclick="javascript:load_image('omniglot1.jpg');return false;">
-              <img src="./preset_image/omniglot1.jpg"></button>
-
-            <button type="button" id="omniglot2_btn" onclick="javascript:load_image('omniglot2.jpg');return false;">
-              <img src="./preset_image/omniglot2.jpg"></button>
-
-            <button type="button" id="fashionmnist1_btn"
-              onclick="javascript:load_image('fashionmnist1.jpg');return false;">
-              <img src="./preset_image/fashionmnist1.jpg"></button>
-
-            <button type="button" id="fashionmnist2_btn"
-              onclick="javascript:load_image('fashionmnist2.jpg');return false;">
-              <img src="./preset_image/fashionmnist2.jpg"></button>
-
-          </div>
-
+        </br>
         </div>
+      
         <div class="second">
           <span>
             Reconstruct Error:
@@ -170,7 +83,41 @@
     </div>
   </div>
 
-  </br></br>
+  <div class="container">
+    <div class="row">
+    <span><b>Preset Inputs</b></span></br>
+      <div class="preset_btn">
+        <span>Inlier Inputs</span></br>
+        <button type="button" id="mnist3_btn" onclick="javascript:load_image('mnist_3.jpg');return false;">
+          <img src="./preset_image/mnist_3.jpg"></button>
+
+        <button type="button" id="mnist5_btn" onclick="javascript:load_image('mnist_5.jpg');return false;">
+          <img src="./preset_image/mnist_5.jpg"></button>
+
+        <button type="button" id="mnist7_btn" onclick="javascript:load_image('mnist_7.jpg');return false;">
+          <img src="./preset_image/mnist_7.jpg"></button>
+      </div>
+
+      </br></br></br>
+
+      <div class="preset_btn">
+        <span>Outlier Inputs</span></br>
+        <button type="button" id="omniglot1_btn" onclick="javascript:load_image('omniglot1.jpg');return false;">
+          <img src="./preset_image/omniglot1.jpg"></button>
+
+        <button type="button" id="omniglot2_btn" onclick="javascript:load_image('omniglot2.jpg');return false;">
+          <img src="./preset_image/omniglot2.jpg"></button>
+
+        <button type="button" id="fashionmnist1_btn" onclick="javascript:load_image('fashionmnist1.jpg');return false;">
+          <img src="./preset_image/fashionmnist1.jpg"></button>
+
+        <button type="button" id="fashionmnist2_btn" onclick="javascript:load_image('fashionmnist2.jpg');return false;">
+          <img src="./preset_image/fashionmnist2.jpg"></button>
+      </div>
+    </div>
+  </div>
+
+  </br>
 
   <div class="container">
     <div class="row">
@@ -200,248 +147,8 @@
     </div>
   </div>
 
-  <!--script src="outlier_reconstruct.js"></script-->
-  <script>
-
-    function make_prediction() {
-      var Incan = document.getElementById("Inputcanvas");
-      var Inctx = Incan.getContext("2d");
-
-      var AEcan = document.getElementById("AEcanvas");
-      var AEctx = AEcan.getContext("2d");
-
-      var NAEcan = document.getElementById("NAEcanvas");
-      var NAEctx = NAEcan.getContext("2d");
-
-      var testimg = new Image();
-      testimg = Inctx.getImageData(0, 0, 28, 28);
-      //testimg.src = "./preset_image/omniglot1.jpg";
-
-      console.log(testimg);
-
-      //AEctx.scale(0.1, 0.1);
-      //AEctx.drawImage(Incan, 0, 0);        
-      //testimg = AEctx.getImageData(0, 0, 28, 28);
-      //AEctx.putImageData(testimg,0,0); 
-      //AEctx.drawImage(testimg,0,0)
-      //NAEctx.drawImage(testimg,0,0,28,28);
-
-      //var tempdata=testimg.data;
-
-      /*
-      for (var i = 0; i < testimg.data.length; i += 4) {
-        
-        
-        if (testimg.data[i]== 0 && testimg.data[i + 1]==0 &&testimg.data[i + 2] ==0){
-          testimg.data[i+3]=0
-        }
-        else{        
-        testimg.data[i + 3] = testimg.data[i+3];
-        }
-        
-        testimg.data[i+3]=255;
-      }
-      */
-
-      const input = tf.tidy(() => {
-        const img = tf.browser.fromPixels(testimg,1);
-        return img.expandDims(0);
-        
-      })
-      console.log(input)
-      console.log(input.arraySync())
-      /*
-      var inputs=input.arraySync();
-      var x=0;
-      var y=0;
-      
-      for (var i = 0; i < 28*28; i ++) {
-          
-          if(inputs[0][x][y][0]!=0)
-          {
-            inputs[0][x][y][0]=255;
-          }
-          
-          y = y + 1;
-          if (y == 28) {
-            x = x + 1;
-            y = 0;
-          }
-          
-          
-        }
-      */
-       
-      const resized = tf.cast(input, 'float32')
-      var t3d = tf.reshape(resized, [-1, 28, 28])
-      //var t3darr=(t3d.arraySync());
-      t3d=t3d.div(255);
-      console.log(t3d.arraySync())
-      const pred = model.predict(t3d);
-
-      var a = pred;
-      // map values from 0 -> 1 to 0 -> 255
-      a = a.mul(255);
-
-      var cast = a.asType('int32');
-      var values = cast.arraySync();
-      console.log(values);
-
-      var img = new Image();
-      img.src = './preset_image/empty.jpg';
-
-      img.onload = function () {
-        //Inctx.drawImage(testimg, 0, 0,28, 28);
-        Inctx.putImageData(testimg, 0, 0);
-        var imageData = Inctx.getImageData(0, 0, 28, 28);
-        NAEctx.putImageData(testimg, 0, 0);
-        editPixels(imageData.data);
-        drawEditedImage(imageData);
-        reconError(testimg.data, imageData.data);
-      };
-
-      function reconError(beforeData, afterData){
-        console.log(beforeData);
-        console.log(afterData);
-        var result=0;
-        for (var i =0; i < beforeData.length; i+=4){
-          result += (beforeData[i]-afterData[i])*(beforeData[i]-afterData[i]);
-          result += (beforeData[i+1]-afterData[i+1])*(beforeData[i+1]-afterData[i+1]);
-          result += (beforeData[i+2]-afterData[i+2])*(beforeData[i+2]-afterData[i+2]);
-        }
-        console.log(result);
-      }
-
-      function editPixels(imgData) {
-        console.log(imgData.length);
-        console.log(values);
-        console.log(imgData);
-        var x = 0;
-        var y = 0;
-
-        for (var i = 0; i < imgData.length; i += 4) {
-          imgData[i] = values[0][x][y];
-          imgData[i + 1] = values[0][x][y];
-          imgData[i + 2] = values[0][x][y];
-          //imgData[i + 3] = 255;
-
-          y = y + 1;
-          if (y == 28) {
-            x = x + 1;
-            y = 0;
-          }
-        }
-      }
-
-      function drawEditedImage(newData) {
-        console.log(newData);
-        AEctx.putImageData(newData, 0, 0);
-      }
-    }
-
-
-  </script>
-
-  <script>
-
-    // 원본 이미지 사이즈는 28*28로 통일
-    function load_image(image_name) {
-      var can = document.getElementById("Inputcanvas");
-      var ctx = canvas.getContext("2d");
-      var image = new Image();
-      image.src = "./preset_image/" + image_name;
-      image.addEventListener("load", () => { ctx.drawImage(image, 0, 0, 28, 28) })
-    }
-
-    var canvas, context;
-    var AEcan, AEcon;
-    var NAEcan, NAEcon;
-
-    function init() {
-      canvas = document.getElementById("Inputcanvas");
-      context = canvas.getContext("2d");
-
-      AEcan = document.getElementById("AEcanvas");
-      AEcon = AEcan.getContext("2d");
-
-      NAEcan = document.getElementById("NAEcanvas");
-      NAEcon = NAEcan.getContext("2d");
-
-
-      context.lineWidth = 1.5; // 선 굵기를 20로 설정
-      context.strokeStyle = "white";
-      //context.lineCap = "round";
-
-      // 마우스 리스너 등록. e는 MouseEvent 객체
-      canvas.addEventListener("mousemove", function (e) { move(e) }, false); //  캔버스에서 마우스가 움직이는 동안 발생되는 이벤트
-      canvas.addEventListener("mousedown", function (e) { down(e) }, false); // 캔버스에서 마우스를 눌렀을 때 발생되는 이벤트
-      canvas.addEventListener("mouseup", function (e) { up(e) }, false); // 캔버스에서 눌러진 마우스를 떼었을 때 발생되는 이벤트
-      canvas.addEventListener("mouseout", function (e) { out(e) }, false); // 캔버스에서 마우스가 벗어났을 때 발생되는 이벤트
-    }
-
-    var startX = 0, startY = 0; // 드래깅동안, 처음 마우스가 눌러진 좌표
-    var drawing = false;
-
-    function canvasX(clientX) {
-      var bound = canvas.getBoundingClientRect();
-      return (clientX - bound.left) * (canvas.width / bound.width);
-    }
-
-    function canvasY(clientY) {
-      var bound = canvas.getBoundingClientRect();
-      return (clientY - bound.top) * (canvas.height / bound.height);
-    }
-
-    function draw(curX, curY) {
-      context.beginPath(); //마우스를 누르고 움직일 때마다 시작점을 재지정
-      context.moveTo(startX, startY);
-      context.lineTo(curX, curY); //마우스 시작점부터 현재 점까지 라인 그리기
-      context.stroke();
-    }
-    function down(e) {
-      e.preventDefault(); //더블클릭했을 때 캔버스 지정하게 되어서 파란색으로 반전되는 것 막음
-
-      // startX = e.offsetX; startY = e.offsetY;
-      // startX=e.clientX-canvas.offsetLeft; startY=e.clientY-canvas.offsetTop;
-      startX = canvasX(e.clientX); startY = canvasY(e.clientY);
-      drawing = true;
-    }
-    function up(e) { drawing = false; }
-    function move(e) {
-      if (!drawing) return; // 마우스가 눌러지지 않았으면 리턴
-      // var curX = e.offsetX, curY = e.offsetY;
-      var curX = canvasX(e.clientX), curY = canvasY(e.clientY);
-      draw(curX, curY);
-      startX = curX; startY = curY;
-    }
-    function out(e) { drawing = false; }
-
-
-    function clearArea() {
-      // Use the identity matrix while clearing the canvas
-      context.setTransform(1, 0, 0, 1, 0, 0);
-      context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-
-      AEcon.setTransform(1, 0, 0, 1, 0, 0);
-      AEcon.clearRect(0, 0, context.canvas.width, context.canvas.height);
-
-      NAEcon.setTransform(1, 0, 0, 1, 0, 0);
-      NAEcon.clearRect(0, 0, context.canvas.width, context.canvas.height);
-    }
-
-  </script>
-
-
-  <!--canvas 그림 280에서 28로 10배 다운스케일링 할 때 해상도 비교-->
-  <!--script type="text/javascript">
-  function fromDataURL(){       
-    var copyCanvas = document.getElementById('copyCanvas');    
-    var copyContext = copyCanvas.getContext('2d'); 
-    copyContext.drawImage(canvas,0,0,28,28);  
-    } 
+  <script src="canvas.js"></script>
+  <script src="model.js"></script>
   
-  </script-->
-
 </body>
-
 </html>
