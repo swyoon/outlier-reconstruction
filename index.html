@@ -133,8 +133,8 @@
           </br></br>
           <span>Preset Inputs</span></br>
           <div class="preset_btn">
-            <button type="button" id="mnist3_btn" onclick="javascript:load_image('mnist_3.jpg');return false;">
-              <img src="./preset_image/mnist_3.jpg"></button>
+            <button type="button" id="mnist3_btn" onclick="javascript:load_image('png_mnist_5.png');return false;">
+              <img src="./preset_image/png_mnist_5.png"></button>
 
             <button type="button" id="mnist7_btn" onclick="javascript:load_image('mnist_7.jpg');return false;">
               <img src="./preset_image/mnist_7.jpg"></button>
@@ -217,7 +217,7 @@
       testimg = Inctx.getImageData(0, 0, 28, 28);
       //testimg.src = "./preset_image/omniglot1.jpg";
 
-      console.log(testimg.data);
+      console.log(testimg);
 
       //AEctx.scale(0.1, 0.1);
       //AEctx.drawImage(Incan, 0, 0);        
@@ -226,14 +226,57 @@
       //AEctx.drawImage(testimg,0,0)
       //NAEctx.drawImage(testimg,0,0,28,28);
 
+      //var tempdata=testimg.data;
+
+      /*
+      for (var i = 0; i < testimg.data.length; i += 4) {
+        
+        
+        if (testimg.data[i]== 0 && testimg.data[i + 1]==0 &&testimg.data[i + 2] ==0){
+          testimg.data[i+3]=0
+        }
+        else{        
+        testimg.data[i + 3] = testimg.data[i+3];
+        }
+        
+        testimg.data[i+3]=255;
+      }
+      */
+
       const input = tf.tidy(() => {
-        const img = tf.browser.fromPixels(testimg, 1);
+        const img = tf.browser.fromPixels(testimg,1);
         return img.expandDims(0);
+        
       })
-
+      console.log(input)
+      console.log(input.arraySync())
+      /*
+      var inputs=input.arraySync();
+      var x=0;
+      var y=0;
+      
+      for (var i = 0; i < 28*28; i ++) {
+          
+          if(inputs[0][x][y][0]!=0)
+          {
+            inputs[0][x][y][0]=255;
+          }
+          
+          y = y + 1;
+          if (y == 28) {
+            x = x + 1;
+            y = 0;
+          }
+          
+          
+        }
+      */
+       
       const resized = tf.cast(input, 'float32')
-      const t3d = tf.reshape(resized, [-1, 28, 28])
-
+      var t3d = tf.reshape(resized, [-1, 28, 28])
+      //var t3darr=(t3d.arraySync());
+      t3d=t3d.div(255);
+      console.log(t3d.arraySync())
       const pred = model.predict(t3d);
 
       var a = pred;
@@ -254,7 +297,20 @@
         NAEctx.putImageData(testimg, 0, 0);
         editPixels(imageData.data);
         drawEditedImage(imageData);
+        reconError(testimg.data, imageData.data);
       };
+
+      function reconError(beforeData, afterData){
+        console.log(beforeData);
+        console.log(afterData);
+        var result=0;
+        for (var i =0; i < beforeData.length; i+=4){
+          result += (beforeData[i]-afterData[i])*(beforeData[i]-afterData[i]);
+          result += (beforeData[i+1]-afterData[i+1])*(beforeData[i+1]-afterData[i+1]);
+          result += (beforeData[i+2]-afterData[i+2])*(beforeData[i+2]-afterData[i+2]);
+        }
+        console.log(result);
+      }
 
       function editPixels(imgData) {
         console.log(imgData.length);
@@ -267,6 +323,7 @@
           imgData[i] = values[0][x][y];
           imgData[i + 1] = values[0][x][y];
           imgData[i + 2] = values[0][x][y];
+          //imgData[i + 3] = 255;
 
           y = y + 1;
           if (y == 28) {
