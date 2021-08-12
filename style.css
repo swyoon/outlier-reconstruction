@@ -6,6 +6,11 @@ canvas {
   height: 100%;
 }
 
+input {
+  width: 90px;
+  height: 30px;
+}
+
 .parent {
   width: 90%;
   margin: 10px auto;

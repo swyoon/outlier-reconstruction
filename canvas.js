@@ -103,6 +103,9 @@ function out(e) {
   drawing = false;
 }
 
+var AErecon = document.getElementById("AErecon");
+var NAErecon = document.getElementById("NAErecon");
+
 function clearArea() {
   // Use the identity matrix while clearing the canvas
   context.setTransform(1, 0, 0, 1, 0, 0);
@@ -113,4 +116,7 @@ function clearArea() {
 
   NAEcon.setTransform(1, 0, 0, 1, 0, 0);
   NAEcon.clearRect(0, 0, context.canvas.width, context.canvas.height);
+
+  AErecon.value = "";
+  NAErecon.value = "";
 }

@@ -46,13 +46,16 @@ function make_prediction() {
   };
 
   function reconError(beforeData, afterData) {
-    var result = 0;
-    for (var i = 0; i < beforeData.length; i++) {
-      result +=
-        ((beforeData[i] - afterData[i]) * (beforeData[i] - afterData[i])) /
-        (255 * 255);
-    }
-    console.log((result / 3136) * 100);
+    var tf_result = 0;
+    //tf_result = tf.squaredDifference(Array.from(beforeData), Array.from(afterData));
+    tf_result = tf.losses.meanSquaredError(
+      Array.from(beforeData),
+      Array.from(afterData)
+    );
+    tf_result = tf_result.arraySync();
+    tf_result = tf_result / 100;
+    tf_result = tf_result.toFixed(3);
+    document.getElementById("AErecon").value = tf_result;
   }
 
   function editPixels(imgData) {
