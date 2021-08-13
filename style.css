@@ -1,3 +1,77 @@
+.title {
+  background-color: rgba(6, 69, 243, 0.849);
+  opacity: 0.9;
+  color: white;
+}
+
+#title {
+  text-align: center;
+  font-size: 50px;
+  font-weight: 600;
+}
+
+#subtitle {
+  text-align: center;
+  font-size: 17px;
+}
+
+#namelink {
+  color: rgb(206, 206, 206);
+}
+
+#para {
+  border-style: solid;
+  border-width: 0 0 2px 8px;
+  padding: 8px;
+  border-color: rgba(0, 102, 255, 0.877);
+  font-size: 25px;
+}
+
+#presettitle {
+  color: rgb(70, 97, 250);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+#presetsubtitle {
+  /*border-style: solid;*/
+  /*border-width: 1px 1px 1px 1px;*/
+  padding: 2px;
+  /*word-break: break-all;*/
+  /*border-color: rgb(77, 156, 235);*/
+  color: rgb(51, 113, 247);
+}
+
+#preset {
+  margin-left: 0.1%;
+  border-style: solid;
+  border-width: 1px 1px 1px 1px;
+  padding: 1px;
+  width: 250px;
+  /*word-break: break-all;*/
+  border-color: rgb(77, 156, 235);
+  background-color: rgb(227, 237, 241);
+}
+
+#canvastitle {
+  border-style: solid;
+  border-width: 1px 1px 1px 1px;
+  padding: 2px;
+  /*word-break: break-all;*/
+  border-color: rgb(77, 156, 235);
+  background-color: rgb(204, 225, 235);
+  font-size: 1rem;
+  color: black;
+  font-weight: 400;
+  border-radius: 5px/10px;
+}
+
+#canvasbutton {
+  width: 3.5rem;
+  height: 2rem;
+  font-size: 16px;
+}
+
 canvas {
   background-color: black;
   border: 1px solid blue;

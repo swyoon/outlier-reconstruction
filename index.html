@@ -18,14 +18,20 @@
 </head>
 
 <body onload="init(), loadModel()">
-  <h1 style="text-align: center;">Outlier Reconstruction</h1>
 
-  <p style="text-align: center;">Demo coded by <a href="mailto: junhr99@naver.com">Hyerim Jeon</a> and <a
-      href="https://swyoon.github.io/">Sangwoong Yoon</a>.
-  </p>
-  <br><br>
-
+  <div class="title">
+    <p id="title">Outlier Reconstruction</p>
+    <p id="subtitle">Demo coded by <a id="namelink" href="mailto: junhr99@naver.com">Hyerim Jeon</a>
+      and <a id="namelink" href="https://swyoon.github.io/">Sangwoong Yoon</a>.
+    </p>
+  </div>
+  <br>
   <div class="container">
+    <span id="para">
+      Intro
+    </span>
+    </br></br>
+
     <div class="row">
       <p>
         <b>Outlier reconstruction</b> is a phenomenon that an autoencoder (AE) successfully reconstructs an outlier.
@@ -41,14 +47,18 @@
         The outlier reconstruction is naturally suppresed in NAE through the enforcement of the normalization
         constraint.
       </p>
-
+    </div>
+    </br>
+    <span id="para">
+      Demo
+    </span>
+    </br></br>
+    <div class="row">
       <div class="parent">
-        <div class="first">Input</div>
-        <div class="second">AE Reconstruction</div>
-        <div class="third">NAE Reconstruction</div>
-      </div>
+        <div id="canvastitle" class="first">Input</div>
+        <div id="canvastitle" class="second">AE Reconstruction</div>
+        <div id="canvastitle" class="third">NAE Reconstruction</div>
 
-      <div class="parent">
         <div class="first">
           <canvas width="28" height="28" id="Inputcanvas"></canvas>
         </div>
@@ -64,17 +74,19 @@
 
       <div class="parent">
         <div class="first">
-          <button onclick="javascript:clearArea();return false;">Clear</button>
-          <button onclick="javascript:make_prediction();return false;">Run</button>
-        </br>
+          <button id="canvasbutton" class="btn btn-primary btn-sm"
+            onclick="javascript:clearArea();return false;">Clear</button>
+          <button id="canvasbutton" class="btn btn-primary btn-sm"
+            onclick="javascript:make_prediction();return false;">Run</button>
+          </br>
         </div>
-      
+
         <div class="second">
           <span>
             Reconstuct Error:
           </span>
           <input type="text" id="AErecon">
-          
+
         </div>
         <div class="third">
           <span>
@@ -85,12 +97,14 @@
       </div>
     </div>
   </div>
+  </br>
 
   <div class="container">
-    <div class="row">
-    <span><b>Preset Inputs</b></span></br>
+
+    <span id="presettitle">Preset Inputs</span>
+    <div id="preset" class="row">
       <div class="preset_btn">
-        <span>Inlier Inputs</span></br>
+        <span id=presetsubtitle>Inlier Inputs</span></br>
         <button type="button" id="mnist3_btn" onclick="javascript:load_image('mnist_3.jpg');return false;">
           <img src="./preset_image/mnist_3.jpg"></button>
 
@@ -104,7 +118,7 @@
       </br></br></br>
 
       <div class="preset_btn">
-        <span>Outlier Inputs</span></br>
+        <span id="presetsubtitle">Outlier Inputs</span></br>
         <button type="button" id="omniglot1_btn" onclick="javascript:load_image('omniglot1.jpg');return false;">
           <img src="./preset_image/omniglot1.jpg"></button>
 
@@ -120,9 +134,13 @@
     </div>
   </div>
 
-  </br>
+  </br></br>
 
   <div class="container">
+    <span id="para">
+      Info
+    </span>
+    </br></br>
     <div class="row">
       <p>
         To learn more about outlier reconstruction and NAE, please check out our paper
@@ -152,6 +170,7 @@
 
   <script src="canvas.js"></script>
   <script src="model.js"></script>
-  
+
 </body>
+
 </html>
