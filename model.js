@@ -55,7 +55,7 @@ function make_prediction() {
     tf_result = tf_result.arraySync();
     tf_result = tf_result / 100;
     tf_result = tf_result.toFixed(3);
-    document.getElementById("AErecon").value = tf_result;
+    document.getElementById("AErecon").innerHTML = tf_result;
   }
 
   function editPixels(imgData) {

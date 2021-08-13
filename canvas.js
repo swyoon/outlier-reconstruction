@@ -14,6 +14,9 @@ var AEcan, AEcon;
 var NAEcan, NAEcon;
 
 function init() {
+  document.getElementById("AErecon").innerHTML = "0";
+  document.getElementById("NAErecon").innerHTML = "0";
+
   canvas = document.getElementById("Inputcanvas");
   context = canvas.getContext("2d");
 
@@ -117,6 +120,6 @@ function clearArea() {
   NAEcon.setTransform(1, 0, 0, 1, 0, 0);
   NAEcon.clearRect(0, 0, context.canvas.width, context.canvas.height);
 
-  AErecon.value = "";
-  NAErecon.value = "";
+  AErecon.innerHTML = "0";
+  NAErecon.innerHTML = "0";
 }
