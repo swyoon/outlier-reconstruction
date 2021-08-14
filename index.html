@@ -15,13 +15,23 @@
     crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"></script>
 
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7G61GTVL1W"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-7G61GTVL1W');
+  </script>
+
 </head>
 
 <body onload="init(), loadModel()">
 
   <div class="title">
     <p id="title">Outlier Reconstruction</p>
-    <p id="subtitle">Demo coded by <a id="namelink" href="mailto: junhr99@naver.com">Hyerim Jeon</a>
+    <p id="subtitle">Demo developed by <a id="namelink" href="mailto: junhr99@naver.com">Hyerim Jeon</a>
       and <a id="namelink" href="https://swyoon.github.io/">Sangwoong Yoon</a>.
     </p>
   </div>
@@ -54,48 +64,40 @@
     </span>
     </br></br>
     <div class="row">
-      <div class="parent">
-        <div id="canvastitle" class="first">Input</div>
-        <div id="canvastitle" class="second">AE Reconstruction</div>
-        <div id="canvastitle" class="third">NAE Reconstruction</div>
-
-        <div class="first">
+      <p class="lead">Draw with your mouse in Input canvas, or <br> Click an image from Preset Inputs.</p>
+    </div>
+    <div class="row justify-content-md-center">
+        <div class="col col-md first" style="border-style: solid; padding-bottom: 10px">
+          <div id="canvastitle" class="first text-center">Input</div>
           <canvas width="28" height="28" id="Inputcanvas"></canvas>
-        </div>
 
-        <div class="second">
-          <canvas width="28" height="28" id="AEcanvas"></canvas>
-        </div>
-
-        <div class="third">
-          <canvas width="28" height="28" id="NAEcanvas"></canvas>
-        </div>
-      </div>
-
-      <div class="parent">
-        <div class="first">
-          <button id="canvasbutton" class="btn btn-primary btn-sm"
-            onclick="javascript:clearArea();return false;">Clear</button>
+          <div class="text-center">
           <button id="canvasbutton" class="btn btn-primary btn-sm"
             onclick="javascript:make_prediction();return false;">Run</button>
-          </br>
+          <button id="canvasbutton" class="btn btn-secondary btn-sm"
+            onclick="javascript:clearArea();return false;">Clear</button>
+          </div>
         </div>
 
-        <div class="second">
-          <span>
-            Reconstuct Error:
-          </span>
+        <div class="col col-md second">
+          <div id="canvastitle" class="second">AE Reconstruction</div>
+          <canvas width="28" height="28" id="AEcanvas"></canvas>
+          <div style="text-align:center">
+          <span>Reconstruction Error: </span>
           <span id="AErecon"></span>
+          </div>
         </div>
 
-        <div class="third">
-          <span>
-            Reconstuct Error:
-          </span>
+        <div class="col col-md third">
+          <div id="canvastitle" class="third">NAE Reconstruction</div>
+          <canvas width="28" height="28" id="NAEcanvas"></canvas>
+
+          <div style="text-align:center">
+          <span>Reconstruction Error:</span>
           <span id="NAErecon"></span>
-          
+          </div>
         </div>
-      </div>
+
     </div>
   </div>
   </br>

@@ -53,7 +53,6 @@ function make_prediction() {
   img.onload = function () {
     var AEImageData = Inctx.getImageData(0, 0, 28, 28);
     var NAEImageData = Inctx.getImageData(0, 0, 28, 28);
-    // NAEctx.putImageData(testimg, 0, 0);
     editPixels(AEImageData.data, ae_values);
     editPixels(NAEImageData.data, nae_values);
     drawEditedImage(AEctx, AEImageData);
@@ -71,7 +70,7 @@ function make_prediction() {
     );
     tf_result = tf_result.arraySync();
     tf_result = tf_result / 100;
-    tf_result = tf_result.toFixed(3);
+    tf_result = tf_result.toFixed(1);
     document.getElementById(elementid).innerHTML = tf_result;
   }
 
