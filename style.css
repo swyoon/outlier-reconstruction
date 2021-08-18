@@ -56,10 +56,11 @@
   border-style: solid;
   border-width: 1px 1px 1px 1px;
   padding: 1px;
-  width: 250px;
+  width: 230px;
   /*word-break: break-all;*/
   border-color: rgb(77, 156, 235);
   background-color: rgb(227, 237, 241);
+  padding-bottom: 10px;
 }
 
 #canvastitle {
@@ -71,7 +72,7 @@
   /*word-break: break-all;*/
   /*border-color: rgb(77, 156, 235);*/
   /*background-color: rgb(204, 225, 235);*/
-  font-size: 1.2rem;
+  font-size: 18px;
   color: black;
   /*border-radius: 5px/10px;*/
 }
@@ -86,8 +87,11 @@ canvas {
   background-color: black;
   /*border: 1px solid blue;*/
   /*position: absolute;*/
-  width: 100%;
+  width: 90%;
+  display: block;
+  margin: auto;
   /*height: 100%;*/
+  margin-bottom: 10px;
 }
 
 .parent {

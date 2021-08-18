@@ -35,11 +35,14 @@
       and <a id="namelink" href="https://swyoon.github.io/">Sangwoong Yoon</a>.
     </p>
   </div>
+
   <br>
+
   <div class="container">
     <span id="para">
       Intro
     </span>
+
     </br></br>
 
     <div class="row">
@@ -66,11 +69,52 @@
     <div class="row">
       <p class="lead">Draw with your mouse in Input canvas, or <br> Click an image from Preset Inputs.</p>
     </div>
-    <div class="row justify-content-md-center">
-        <div class="col col-md first" style="border-style: solid; padding-bottom: 10px">
-          <div id="canvastitle" class="first text-center">Input</div>
-          <canvas width="28" height="28" id="Inputcanvas"></canvas>
+    </div>
 
+    <div class="container">
+
+      <span id="presettitle">Preset Inputs</span>
+      <div id="preset" class="row">
+        <div class="preset_btn">
+          <span id=presetsubtitle>Inlier Inputs</span></br>
+          <button type="button" id="mnist3_btn" onclick="javascript:load_image('mnist_3.jpg');return false;">
+            <img src="./preset_image/mnist_3.jpg"></button>
+  
+          <button type="button" id="mnist5_btn" onclick="javascript:load_image('mnist_5.jpg');return false;">
+            <img src="./preset_image/mnist_5.jpg"></button>
+  
+          <button type="button" id="mnist7_btn" onclick="javascript:load_image('mnist_7.jpg');return false;">
+            <img src="./preset_image/mnist_7.jpg"></button>
+        </div>
+  
+        </br></br></br>
+  
+        <div class="preset_btn">
+          <span id="presetsubtitle">Outlier Inputs</span></br>
+          <button type="button" id="omniglot1_btn" onclick="javascript:load_image('omniglot1.jpg');return false;">
+            <img src="./preset_image/omniglot1.jpg"></button>
+  
+          <button type="button" id="omniglot2_btn" onclick="javascript:load_image('omniglot2.jpg');return false;">
+            <img src="./preset_image/omniglot2.jpg"></button>
+  
+          <button type="button" id="fashionmnist1_btn" onclick="javascript:load_image('fashionmnist1.jpg');return false;">
+            <img src="./preset_image/fashionmnist1.jpg"></button>
+  
+          <button type="button" id="fashionmnist2_btn" onclick="javascript:load_image('fashionmnist2.jpg');return false;">
+            <img src="./preset_image/fashionmnist2.jpg"></button>
+        </div>
+      </div>
+    </div>
+  </br>
+
+  <div class="container">
+    <div class="row">
+    
+      <div class = "col-md">
+        <div style="border-style: solid; padding-bottom: 10px; border-color: black" >
+          <div id="canvastitle" >Input</div>
+          <canvas width="28" height="28" id="Inputcanvas" style="cursor:url(./cursor_image/pencil.cur),auto"></canvas>
+        
           <div class="text-center">
           <button id="canvasbutton" class="btn btn-primary btn-sm"
             onclick="javascript:make_prediction();return false;">Run</button>
@@ -78,64 +122,38 @@
             onclick="javascript:clearArea();return false;">Clear</button>
           </div>
         </div>
-
-        <div class="col col-md second">
-          <div id="canvastitle" class="second">AE Reconstruction</div>
-          <canvas width="28" height="28" id="AEcanvas"></canvas>
+      </div>
+      
+      <div class = "col-md">
+        <div  style="border-style: solid; padding-bottom: 10px; border-color: white">
+          <div id="canvastitle" >AE Reconstruction</div>
+          <canvas width="28" height="28" id="AEcanvas" style="cursor:url(./cursor_image/x.cur),auto" ></canvas>
+          
           <div style="text-align:center">
           <span>Reconstruction Error: </span>
           <span id="AErecon"></span>
           </div>
         </div>
+        </div>
 
-        <div class="col col-md third">
-          <div id="canvastitle" class="third">NAE Reconstruction</div>
-          <canvas width="28" height="28" id="NAEcanvas"></canvas>
-
+        <div class = "col-md">
+        <div  style="border-style: solid; padding-bottom: 10px; border-color: white" >
+          <div id="canvastitle">NAE Reconstruction</div>
+          <canvas width="28" height="28" id="NAEcanvas" style="cursor:url(./cursor_image/x.cur),auto"></canvas>
+        
           <div style="text-align:center">
           <span>Reconstruction Error:</span>
           <span id="NAErecon"></span>
           </div>
         </div>
-
+      </div>
+    
     </div>
-  </div>
+    </div>
+ 
   </br>
 
-  <div class="container">
-
-    <span id="presettitle">Preset Inputs</span>
-    <div id="preset" class="row">
-      <div class="preset_btn">
-        <span id=presetsubtitle>Inlier Inputs</span></br>
-        <button type="button" id="mnist3_btn" onclick="javascript:load_image('mnist_3.jpg');return false;">
-          <img src="./preset_image/mnist_3.jpg"></button>
-
-        <button type="button" id="mnist5_btn" onclick="javascript:load_image('mnist_5.jpg');return false;">
-          <img src="./preset_image/mnist_5.jpg"></button>
-
-        <button type="button" id="mnist7_btn" onclick="javascript:load_image('mnist_7.jpg');return false;">
-          <img src="./preset_image/mnist_7.jpg"></button>
-      </div>
-
-      </br></br></br>
-
-      <div class="preset_btn">
-        <span id="presetsubtitle">Outlier Inputs</span></br>
-        <button type="button" id="omniglot1_btn" onclick="javascript:load_image('omniglot1.jpg');return false;">
-          <img src="./preset_image/omniglot1.jpg"></button>
-
-        <button type="button" id="omniglot2_btn" onclick="javascript:load_image('omniglot2.jpg');return false;">
-          <img src="./preset_image/omniglot2.jpg"></button>
-
-        <button type="button" id="fashionmnist1_btn" onclick="javascript:load_image('fashionmnist1.jpg');return false;">
-          <img src="./preset_image/fashionmnist1.jpg"></button>
-
-        <button type="button" id="fashionmnist2_btn" onclick="javascript:load_image('fashionmnist2.jpg');return false;">
-          <img src="./preset_image/fashionmnist2.jpg"></button>
-      </div>
-    </div>
-  </div>
+  
 
   </br></br>
 
