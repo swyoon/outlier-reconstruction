@@ -31,15 +31,15 @@
 
   <div class="title">
     <p id="title">Outlier Reconstruction</p>
-    <p id="subtitle">Demo developed by <a id="namelink" href="mailto: junhr99@naver.com">Hyerim Jeon</a>
-      and <a id="namelink" href="https://swyoon.github.io/">Sangwoong Yoon</a>.
+    <p id="subtitle">Demo developed by <a class="namelink" href="mailto: junhr99@naver.com">Hyerim Jeon</a>
+      and <a class="namelink" href="https://swyoon.github.io/">Sangwoong Yoon</a>.
     </p>
   </div>
 
   <br>
 
   <div class="container">
-    <span id="para">
+    <span class="para">
       Intro
     </span>
 
@@ -62,7 +62,7 @@
       </p>
     </div>
     </br>
-    <span id="para">
+    <span class="para">
       Demo
     </span>
     </br></br>
@@ -73,10 +73,10 @@
 
     <div class="container">
 
-      <span id="presettitle">Preset Inputs</span>
+      <span class="presettitle">Preset Inputs</span>
       <div id="preset" class="row">
         <div class="preset_btn">
-          <span id=presetsubtitle>Inlier Inputs</span></br>
+          <span class=presetsubtitle>Inlier Inputs</span></br>
           <button type="button" id="mnist3_btn" onclick="javascript:load_image('mnist_3.jpg');return false;">
             <img src="./preset_image/mnist_3.jpg"></button>
   
@@ -85,12 +85,14 @@
   
           <button type="button" id="mnist7_btn" onclick="javascript:load_image('mnist_7.jpg');return false;">
             <img src="./preset_image/mnist_7.jpg"></button>
+
+            
         </div>
   
         </br></br></br>
   
         <div class="preset_btn">
-          <span id="presetsubtitle">Outlier Inputs</span></br>
+          <span class="presetsubtitle">Outlier Inputs</span></br>
           <button type="button" id="omniglot1_btn" onclick="javascript:load_image('omniglot1.jpg');return false;">
             <img src="./preset_image/omniglot1.jpg"></button>
   
@@ -111,22 +113,22 @@
     <div class="row">
     
       <div class = "col-md">
-        <div style="border-style: solid; padding-bottom: 10px; border-color: black" >
-          <div id="canvastitle" >Input</div>
+        <div class = "inputborder">
+          <div class="canvastitle">Input</div>
           <canvas width="28" height="28" id="Inputcanvas" style="cursor:url(./cursor_image/pencil.cur),auto"></canvas>
         
           <div class="text-center">
-          <button id="canvasbutton" class="btn btn-primary btn-sm"
+          <button class="btn btn-primary btn-sm" style="font-size: 16px;"
             onclick="javascript:make_prediction();return false;">Run</button>
-          <button id="canvasbutton" class="btn btn-secondary btn-sm"
+          <button class="btn btn-secondary btn-sm" style="font-size: 16px;"
             onclick="javascript:clearArea();return false;">Clear</button>
           </div>
         </div>
       </div>
       
       <div class = "col-md">
-        <div  style="border-style: solid; padding-bottom: 10px; border-color: white">
-          <div id="canvastitle" >AE Reconstruction</div>
+        <div class="defaultborder">
+          <div class="canvastitle">AE Reconstruction</div>
           <canvas width="28" height="28" id="AEcanvas" style="cursor:url(./cursor_image/x.cur),auto" ></canvas>
           
           <div style="text-align:center">
@@ -137,8 +139,8 @@
         </div>
 
         <div class = "col-md">
-        <div  style="border-style: solid; padding-bottom: 10px; border-color: white" >
-          <div id="canvastitle">NAE Reconstruction</div>
+        <div class="defaultborder">
+          <div class="canvastitle">NAE Reconstruction</div>
           <canvas width="28" height="28" id="NAEcanvas" style="cursor:url(./cursor_image/x.cur),auto"></canvas>
         
           <div style="text-align:center">
@@ -151,14 +153,10 @@
     </div>
     </div>
  
-  </br>
-
-  
-
   </br></br>
 
   <div class="container">
-    <span id="para">
+    <span class="para">
       Info
     </span>
     </br></br>

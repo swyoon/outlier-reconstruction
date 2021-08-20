@@ -16,11 +16,11 @@
   font-size: 17px;
 }
 
-#namelink {
+.namelink {
   color: rgb(206, 206, 206);
 }
 
-#para {
+.para {
   border-style: solid;
   border-width: 0 0 2px 8px;
   padding: 8px;
@@ -36,18 +36,14 @@
   margin-left: 1%;
 }
 
-#presettitle {
+.presettitle {
   color: rgb(70, 97, 250);
   font-size: 18px;
   font-weight: 700;
 }
 
-#presetsubtitle {
-  /*border-style: solid;*/
-  /*border-width: 1px 1px 1px 1px;*/
+.presetsubtitle {
   padding: 2px;
-  /*word-break: break-all;*/
-  /*border-color: rgb(77, 156, 235);*/
   color: rgb(51, 113, 247);
 }
 
@@ -57,72 +53,39 @@
   border-width: 1px 1px 1px 1px;
   padding: 1px;
   width: 230px;
-  /*word-break: break-all;*/
   border-color: rgb(77, 156, 235);
   background-color: rgb(227, 237, 241);
   padding-bottom: 10px;
 }
 
-#canvastitle {
-  /*border-style: solid;*/
-  /*border-width: 1px 1px 1px 1px;*/
+.canvastitle {
   text-align: center;
   padding: 2px;
   font-weight: bold;
-  /*word-break: break-all;*/
-  /*border-color: rgb(77, 156, 235);*/
-  /*background-color: rgb(204, 225, 235);*/
   font-size: 18px;
   color: black;
-  /*border-radius: 5px/10px;*/
-}
-
-#canvasbutton {
-  width: 3.5rem;
-  height: 2rem;
-  font-size: 16px;
 }
 
 canvas {
   background-color: black;
-  /*border: 1px solid blue;*/
-  /*position: absolute;*/
   width: 90%;
   display: block;
   margin: auto;
-  /*height: 100%;*/
   margin-bottom: 10px;
-}
-
-.parent {
-  width: 90%;
-  margin: 10px auto;
-}
-
-.first {
-  /*float: left;*/
-  /*width: 30%;*/
-  /* height: 150px; */
-  box-sizing: border-box;
-}
-
-.second {
-  /*float: left;*/
-  margin-left: 5%;
-  /*width: 30%;*/
-  /* height: 150px; */
-  box-sizing: border-box;
-}
-
-.third {
-  /*border: 2px solid black;*/
-  /*float: left;*/
-  margin-left: 5%;
-  /*width: 30%;*/
-  /* height: 150px; */
-  box-sizing: border-box;
 }
 
 .preset_btn {
   float: left;
+}
+
+.inputborder {
+  border-style: solid;
+  padding-bottom: 10px;
+  border-color: black;
+}
+
+.defaultborder {
+  border-style: solid;
+  padding-bottom: 10px;
+  border-color: white;
 }

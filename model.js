@@ -14,7 +14,7 @@ async function loadModel() {
 
 function reconstruct(encoder, decoder, x) {
   z = encoder.predict(x);
-  z = z.div(tf.norm(z, 2, 3, true));  // spherical projection
+  z = z.div(tf.norm(z, 2, 3, true)); // spherical projection
   return decoder.predict(z);
 }
 
@@ -30,6 +30,10 @@ function make_prediction() {
 
   var testimg = new Image();
   testimg = Inctx.getImageData(0, 0, 28, 28);
+
+  for (var i = 3; i < testimg.data.length; i += 4) {
+    testimg.data[i] = 255;
+  }
 
   const input = tf.tidy(() => {
     const img = tf.browser.fromPixels(testimg, 1);
@@ -70,7 +74,7 @@ function make_prediction() {
     );
     tf_result = tf_result.arraySync();
     tf_result = tf_result / 100;
-    tf_result = tf_result.toFixed(1);
+    tf_result = tf_result.toFixed(2);
     document.getElementById(elementid).innerHTML = tf_result;
   }
 
@@ -82,7 +86,7 @@ function make_prediction() {
       imgData[i] = values[0][x][y];
       imgData[i + 1] = values[0][x][y];
       imgData[i + 2] = values[0][x][y];
-      //imgData[i + 3] = 255;
+      imgData[i + 3] = 255;
 
       y = y + 1;
       if (y == 28) {
