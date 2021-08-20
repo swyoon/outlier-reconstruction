@@ -31,10 +31,6 @@ function make_prediction() {
   var testimg = new Image();
   testimg = Inctx.getImageData(0, 0, 28, 28);
 
-  for (var i = 3; i < testimg.data.length; i += 4) {
-    testimg.data[i] = 255;
-  }
-
   const input = tf.tidy(() => {
     const img = tf.browser.fromPixels(testimg, 1);
     return img.expandDims(0);
@@ -66,16 +62,21 @@ function make_prediction() {
   };
 
   function reconError(elementid, beforeData, afterData) {
-    var tf_result = 0;
-    //tf_result = tf.squaredDifference(Array.from(beforeData), Array.from(afterData));
-    tf_result = tf.losses.meanSquaredError(
-      Array.from(beforeData),
-      Array.from(afterData)
-    );
-    tf_result = tf_result.arraySync();
-    tf_result = tf_result / 100;
-    tf_result = tf_result.toFixed(2);
-    document.getElementById(elementid).innerHTML = tf_result;
+    var result = 0;
+    for (var i = 0; i < beforeData.length; i += 4) {
+      result += (beforeData[i] - afterData[i]) * (beforeData[i] - afterData[i]);
+      result +=
+        (beforeData[i + 1] - afterData[i + 1]) *
+        (beforeData[i + 1] - afterData[i + 1]);
+      result +=
+        (beforeData[i + 2] - afterData[i + 2]) *
+        (beforeData[i + 2] - afterData[i + 2]);
+    }
+    result = result / (28 * 28 * 4);
+    result = result / 100;
+    result = result.toFixed(2);
+
+    document.getElementById(elementid).innerHTML = result;
   }
 
   function editPixels(imgData, values) {
