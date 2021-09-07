@@ -1,5 +1,5 @@
 // 원본 이미지 사이즈는 28*28로 통일
-function load_image(image_name) {
+async function load_image(image_name) {
   var can = document.getElementById("Inputcanvas");
   var ctx = can.getContext("2d");
   var image = new Image();
@@ -7,6 +7,8 @@ function load_image(image_name) {
   image.addEventListener("load", () => {
     ctx.drawImage(image, 0, 0, 28, 28);
   });
+  await new Promise(r => setTimeout(r, 200));
+  make_prediction();
 }
 
 var canvas, context;
@@ -14,8 +16,8 @@ var AEcan, AEcon;
 var NAEcan, NAEcon;
 
 function init() {
-  document.getElementById("AErecon").innerHTML = "0";
-  document.getElementById("NAErecon").innerHTML = "0";
+  // document.getElementById("AErecon").innerHTML = "0";
+  // document.getElementById("NAErecon").innerHTML = "0";
 
   canvas = document.getElementById("Inputcanvas");
   context = canvas.getContext("2d");
@@ -159,6 +161,6 @@ function clearArea() {
   NAEcon.setTransform(1, 0, 0, 1, 0, 0);
   NAEcon.clearRect(0, 0, context.canvas.width, context.canvas.height);
 
-  AErecon.innerHTML = "0";
-  NAErecon.innerHTML = "0";
+  // AErecon.innerHTML = "0";
+  // NAErecon.innerHTML = "0";
 }

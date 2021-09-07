@@ -39,26 +39,36 @@
   <br>
 
   <div class="container">
-    <span class="para">
-      Intro
-    </span>
+<!--    <span class="para">-->
+<!--      Intro-->
+<!--    </span>-->
 
-    </br></br>
+<!--    </br></br>-->
 
     <div class="row">
       <p>
-        <b>Outlier reconstruction</b> is a phenomenon that an autoencoder (AE) successfully reconstructs an outlier.
-        In the demo below, we demonstrate that AE trained on MNIST is capable of reconstrcting diverse images that are
-        clearly not MNIST.
-        Outlier reconstruction is detrimental for an autoencoder-based outlier detector,
-        as the reconstructed outliers will be misclassified as an inlier.
+        Proposed by <a href="https://www.nature.com/articles/323533a0">Rumelhart et al.</a> in 1986,
+        an <b>autoencoder (AE)</b> has been a canonical unsupervised learning algorithm
+        that captures the regularities in data by learning to reconstruct them.
+        The autoencoder's ability to reconstruct training data enables
+        the application of an autoencoder to outlier detection, where outliers are assumed to have large
+        reconstruction errors. However, the assumption has been rarely challenged throughout history.
+        In fact, our <a href="https://arxiv.org/abs/2105.05735">ICML 2021 paper</a> reveals that the assumption is false.
+        <b>An autoencoder can sometimes reconstruct outliers in surprisingly good quality</b>,
+          resulting in failures in outlier detection. We call this phenomenon <b>Outlier Reconstruction</b>.
       </p>
+<!--      <p>-->
+<!--        <b>Outlier reconstruction</b> is a phenomenon that an <b>autoencoder (AE)</b> successfully reconstructs an outlier.-->
+<!--        In the demo below, we demonstrate that AE trained on MNIST is capable of reconstrcting diverse images that are-->
+<!--        clearly not MNIST.-->
+<!--        Outlier reconstruction is detrimental for an autoencoder-based outlier detector,-->
+<!--        as the reconstructed outliers will be misclassified as an inlier.-->
+<!--      </p>-->
       <p>
-        In our <a href="https://arxiv.org/abs/2105.05735">ICML 2021 paper</a>,
-        we propose a novel autoencoder called <b>Normalized Autoencoder (NAE)</b> where AE is interpreted as an
-        energy-based model by setting the reconstruction error as the energy function.
-        The outlier reconstruction is naturally suppresed in NAE through the enforcement of the normalization
-        constraint.
+        In our <a href="https://arxiv.org/abs/2105.05735">paper</a>,
+        we propose <b>Normalized Autoencoder (NAE)</b> which is particularly effective at suppressing outlier reconstruction.
+        The suppression is achieved via treating an autoencoder as an energy-based model.
+        As a result, NAE significantly improves outlier detection performance over other existing autoencoder variants.
       </p>
     </div>
     </br>
@@ -67,43 +77,110 @@
     </span>
     </br></br>
     <div class="row">
-      <p class="lead">Draw with your mouse in Input canvas, or <br> Click an image from Preset Inputs.</p>
+      <p>
+      AE and NAE are trained to reconstruct MNIST digits.
+      The architectures of the autoencoders are identical. Only the objective functions are different.
+      </p>
+      <p class="lead">Will they reconstruct outliers? Click image icons below. </p>
     </div>
     </div>
 
     <div class="container">
 
-      <span class="presettitle">Preset Inputs</span>
-      <div id="preset" class="row">
-        <div class="preset_btn">
-          <span class=presetsubtitle>Inlier Inputs</span></br>
-          <button type="button" id="mnist3_btn" onclick="javascript:load_image('mnist_3.jpg');return false;">
-            <img src="./preset_image/mnist_3.jpg"></button>
-  
-          <button type="button" id="mnist5_btn" onclick="javascript:load_image('mnist_5.jpg');return false;">
-            <img src="./preset_image/mnist_5.jpg"></button>
-  
-          <button type="button" id="mnist7_btn" onclick="javascript:load_image('mnist_7.jpg');return false;">
-            <img src="./preset_image/mnist_7.jpg"></button>
+<!--      <span class="presettitle">Preset Inputs</span>-->
 
-            
-        </div>
-  
-        </br></br></br>
-  
-        <div class="preset_btn">
-          <span class="presetsubtitle">Outlier Inputs</span></br>
-          <button type="button" id="omniglot1_btn" onclick="javascript:load_image('omniglot1.jpg');return false;">
-            <img src="./preset_image/omniglot1.jpg"></button>
-  
-          <button type="button" id="omniglot2_btn" onclick="javascript:load_image('omniglot2.jpg');return false;">
-            <img src="./preset_image/omniglot2.jpg"></button>
-  
-          <button type="button" id="fashionmnist1_btn" onclick="javascript:load_image('fashionmnist1.jpg');return false;">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><b>1. MNIST Test Images (Inliers):</b> Good Reconstruction  <br>
+          <button type="button" onclick="javascript:load_image('mnist_0.png'); return false;">
+          <img src="./preset_image/mnist_0.png"></button>
+          <button type="button" onclick="javascript:load_image('mnist_1.png'); return false;">
+          <img src="./preset_image/mnist_1.png"></button>
+          <button type="button" onclick="javascript:load_image('mnist_2.png'); return false;">
+          <img src="./preset_image/mnist_2.png"></button>
+          <button type="button" onclick="javascript:load_image('mnist_3.png'); return false;">
+          <img src="./preset_image/mnist_3.png"></button>
+          <button type="button" onclick="javascript:load_image('mnist_4.png'); return false;">
+          <img src="./preset_image/mnist_4.png"></button>
+          <button type="button" onclick="javascript:load_image('mnist_5.png'); return false;">
+          <img src="./preset_image/mnist_5.png"></button>
+          <button type="button" onclick="javascript:load_image('mnist_6.png'); return false;">
+          <img src="./preset_image/mnist_6.png"></button>
+          <button type="button" onclick="javascript:load_image('mnist_7.png'); return false;">
+          <img src="./preset_image/mnist_7.png"></button>
+          <button type="button" onclick="javascript:load_image('mnist_8.png'); return false;">
+          <img src="./preset_image/mnist_8.png"></button>
+          <button type="button" onclick="javascript:load_image('mnist_9.png'); return false;">
+          <img src="./preset_image/mnist_9.png"></button>
+        </li>
+        <li class="list-group-item"><b>2. Obviously Non-MNIST Images:</b> <b style="color:blue">Outlier Reconstruction Occurs!</b> <br>
+          <button type="button" onclick="javascript:load_image('empty.jpg'); return false;">
+            <img src="./preset_image/empty.jpg"></button>
+          <button type="button" onclick="javascript:load_image('dot1.png'); return false;">
+            <img src="./preset_image/dot1.png"></button>
+          <button type="button" onclick="javascript:load_image('dot2.png'); return false;">
+            <img src="./preset_image/dot2.png"></button>
+          <button type="button" onclick="javascript:load_image('dot3.png'); return false;">
+            <img src="./preset_image/dot3.png"></button>
+          <button type="button" onclick="javascript:load_image('eleven.png'); return false;">
+            <img src="./preset_image/eleven.png"></button>
+          <button type="button" onclick="javascript:load_image('minus1.png'); return false;">
+            <img src="./preset_image/minus1.png"></button>
+          <button type="button" onclick="javascript:load_image('not7.png'); return false;">
+            <img src="./preset_image/not7.png"></button>
+        </li>
+        <li class="list-group-item"><b>3. Omniglot (Also Non-MNIST):</b> <b style="color:blue">Outlier Reconstruction Occurs!</b> <br>
+          <button type="button" onclick="javascript:load_image('omniglot_32.png');return false;">
+            <img src="./preset_image/omniglot_32.png"></button>
+          <button type="button" onclick="javascript:load_image('omniglot_2916.png');return false;">
+            <img src="./preset_image/omniglot_2916.png"></button>
+          <button type="button" onclick="javascript:load_image('omniglot_3767.png');return false;">
+            <img src="./preset_image/omniglot_3767.png"></button>
+          <button type="button" onclick="javascript:load_image('omniglot_6298.png');return false;">
+            <img src="./preset_image/omniglot_6298.png"></button>
+          <button type="button" onclick="javascript:load_image('omniglot_8478.png');return false;">
+            <img src="./preset_image/omniglot_8478.png"></button>
+          <button type="button" onclick="javascript:load_image('omniglot_8657.png');return false;">
+            <img src="./preset_image/omniglot_8657.png"></button>
+          <button type="button" onclick="javascript:load_image('omniglot_10317.png');return false;">
+            <img src="./preset_image/omniglot_10317.png"></button>
+          <button type="button" onclick="javascript:load_image('omniglot_11370.png');return false;">
+            <img src="./preset_image/omniglot_11370.png"></button>
+        </li>
+        <li class="list-group-item"><b>4. Fashion MNIST:</b> Confirming that AE is <b>NOR</b> the identity mapping <br>
+          <button type="button" onclick="javascript:load_image('fashionmnist1.jpg');return false;">
             <img src="./preset_image/fashionmnist1.jpg"></button>
-  
-          <button type="button" id="fashionmnist2_btn" onclick="javascript:load_image('fashionmnist2.jpg');return false;">
+          <button type="button" onclick="javascript:load_image('fashionmnist2.jpg');return false;">
             <img src="./preset_image/fashionmnist2.jpg"></button>
+        </li>
+        <li class="list-group-item"><b>5. DRAW your own outlier in the Input canvas! </b> (by mouse or touch) </li>
+      </ul>
+
+<!--      <div id="preset" class="row">-->
+<!--        <div class="preset_btn">-->
+<!--          <span class=presetsubtitle>Inlier Inputs</span></br>-->
+<!--          <button type="button" id="mnist3_btn" onclick="javascript:load_image('mnist_3.jpg');return false;">-->
+<!--            <img src="./preset_image/mnist_3.jpg"></button>-->
+<!--  -->
+<!--          <button type="button" id="mnist5_btn" onclick="javascript:load_image('mnist_5.jpg');return false;">-->
+<!--            <img src="./preset_image/mnist_5.jpg"></button>-->
+<!--  -->
+<!--          <button type="button" id="mnist7_btn" onclick="javascript:load_image('mnist_7.jpg');return false;">-->
+<!--            <img src="./preset_image/mnist_7.jpg"></button>-->
+
+<!--            -->
+<!--        </div>-->
+<!--  -->
+<!--        </br></br></br>-->
+<!--  -->
+<!--        <div class="preset_btn">-->
+<!--          <span class="presetsubtitle">Outlier Inputs</span></br>-->
+<!--          <button type="button" id="omniglot1_btn" onclick="javascript:load_image('omniglot1.jpg');return false;">-->
+<!--            <img src="./preset_image/omniglot1.jpg"></button>-->
+<!--  -->
+<!--          <button type="button" id="omniglot2_btn" onclick="javascript:load_image('omniglot2.jpg');return false;">-->
+<!--            <img src="./preset_image/omniglot2.jpg"></button>-->
+  
+
         </div>
       </div>
     </div>
@@ -115,7 +192,7 @@
       <div class = "col-md">
         <div class = "inputborder">
           <div class="canvastitle">Input</div>
-          <canvas width="28" height="28" id="Inputcanvas" style="cursor:url(./cursor_image/pencil.cur),auto"></canvas>
+          <canvas width="28" height="28" id="Inputcanvas" style="cursor:url(./cursor_image/pencil.cur),auto;image-rendering: pixelated;"></canvas>
         
           <div class="text-center">
           <button class="btn btn-primary btn-sm" style="font-size: 16px;"
@@ -129,24 +206,24 @@
       <div class = "col-md">
         <div class="defaultborder">
           <div class="canvastitle">AE Reconstruction</div>
-          <canvas width="28" height="28" id="AEcanvas" style="cursor:url(./cursor_image/x.cur),auto" ></canvas>
+          <canvas width="28" height="28" id="AEcanvas" style="cursor:url(./cursor_image/x.cur),auto;image-rendering: pixelated;" ></canvas>
           
-          <div style="text-align:center">
-          <span>Reconstruction Error: </span>
-          <span id="AErecon"></span>
-          </div>
+<!--          <div style="text-align:center">-->
+<!--          <span>Reconstruction Error: </span>-->
+<!--          <span id="AErecon"></span>-->
+<!--          </div>-->
         </div>
         </div>
 
         <div class = "col-md">
         <div class="defaultborder">
           <div class="canvastitle">NAE Reconstruction</div>
-          <canvas width="28" height="28" id="NAEcanvas" style="cursor:url(./cursor_image/x.cur),auto"></canvas>
+          <canvas width="28" height="28" id="NAEcanvas" style="cursor:url(./cursor_image/x.cur),auto;image-rendering: pixelated;"></canvas>
         
-          <div style="text-align:center">
-          <span>Reconstruction Error:</span>
-          <span id="NAErecon"></span>
-          </div>
+<!--          <div style="text-align:center">-->
+<!--          <span>Reconstruction Error:</span>-->
+<!--          <span id="NAErecon"></span>-->
+<!--          </div>-->
         </div>
       </div>
     
@@ -157,16 +234,19 @@
 
   <div class="container">
     <span class="para">
-      Info
+      For More Information
     </span>
     </br></br>
     <div class="row">
-      <p>
-        To learn more about outlier reconstruction and NAE, please check out our paper
+      <p>To learn more about outlier reconstruction and NAE,</p>
+      <ul>
+        <li>Please check out our paper
         <a href="https://arxiv.org/abs/2105.05735">Autoencoding Under Normalization Constraint (Yoon, Noh, and Park,
-          2021)</a>.
-        If you want to cite outlier reconstruction, NAE, or the demo, please use the following bibtex:
-      </p>
+          2021)</a>.</li>
+        <li>The PyTorch implementation of NAE is available on the <a href="https://github.com/swyoon/normalized-autoencoders">GitHub repository</a>.</li>
+        <li>A 4.5-min introductory video is available on <a href="https://www.youtube.com/watch?v=ra6usGKnPGk">YouTube</a>.</li>
+        <li>If you want to cite outlier reconstruction, NAE, or the demo, please use the following bibtex:</li>
+      </ul>
     </div>
   </div>
 

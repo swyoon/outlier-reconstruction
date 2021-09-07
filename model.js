@@ -57,23 +57,23 @@ function make_prediction() {
     editPixels(NAEImageData.data, nae_values);
     drawEditedImage(AEctx, AEImageData);
     drawEditedImage(NAEctx, NAEImageData);
-    reconError("AErecon", testimg.data, AEImageData.data);
-    reconError("NAErecon", testimg.data, NAEImageData.data);
+    // reconError("AErecon", testimg.data, AEImageData.data);
+    // reconError("NAErecon", testimg.data, NAEImageData.data);
   };
 
   function reconError(elementid, beforeData, afterData) {
     var result = 0;
     for (var i = 0; i < beforeData.length; i += 4) {
       result += (beforeData[i] - afterData[i]) * (beforeData[i] - afterData[i]);
-      result +=
-        (beforeData[i + 1] - afterData[i + 1]) *
-        (beforeData[i + 1] - afterData[i + 1]);
-      result +=
-        (beforeData[i + 2] - afterData[i + 2]) *
-        (beforeData[i + 2] - afterData[i + 2]);
+      // result +=
+      //   (beforeData[i + 1] - afterData[i + 1]) *
+      //   (beforeData[i + 1] - afterData[i + 1]);
+      // result +=
+      //   (beforeData[i + 2] - afterData[i + 2]) *
+      //   (beforeData[i + 2] - afterData[i + 2]);
     }
-    result = result / (28 * 28 * 4);
-    result = result / 100;
+    result = result / 255 / 255;
+    // result = result / 100;
     result = result.toFixed(2);
 
     document.getElementById(elementid).innerHTML = result;
