@@ -1,6 +1,6 @@
 # Outlier Reconstruction Interactive Web Demo
 
-[Hyerim Jeon](junhr99@naver.com) and [Sangwoong Yoon](https://swyoon.github.io/)
+[Hyerim Jeon](https://github.com/junhr99) and [Sangwoong Yoon](https://swyoon.github.io/)
 
 This interactive web demo shows that autoencoders can successfully reconstruct outliers. 
 
